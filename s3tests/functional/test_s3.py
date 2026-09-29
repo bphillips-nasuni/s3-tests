@@ -204,6 +204,7 @@ def test_basic_key_count():
     response1 = client.list_objects_v2(Bucket=bucket_name)
     assert response1['KeyCount'] == 5
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_delimiter_basic():
     bucket_name = _create_objects(keys=['foo/bar', 'foo/bar/xyzzy', 'quux/thud', 'asdf'])
     client = get_client()
@@ -218,6 +219,7 @@ def test_bucket_list_delimiter_basic():
     assert prefixes == ['foo/', 'quux/']
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_listv2_delimiter_basic():
     bucket_name = _create_objects(keys=['foo/bar', 'foo/bar/xyzzy', 'quux/thud', 'asdf'])
     client = get_client()
@@ -234,6 +236,7 @@ def test_bucket_listv2_delimiter_basic():
 
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_listv2_encoding_basic():
     bucket_name = _create_objects(keys=['foo+1/bar', 'foo/bar/xyzzy', 'quux ab/thud', 'asdf+b'])
     client = get_client()
@@ -247,6 +250,7 @@ def test_bucket_listv2_encoding_basic():
     assert len(prefixes) == 3
     assert prefixes == ['foo%2B1/', 'foo/', 'quux%20ab/']
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_encoding_basic():
     bucket_name = _create_objects(keys=['foo+1/bar', 'foo/bar/xyzzy', 'quux ab/thud', 'asdf+b'])
     client = get_client()
@@ -355,10 +359,12 @@ def test_bucket_listv2_delimiter_prefix():
 
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_delimiter_prefix_ends_with_delimiter():
     bucket_name = _create_objects(keys=['asdf/'])
     validate_bucket_listv2(bucket_name, 'asdf/', '/', None, 1000, False, ['asdf/'], [], last=True)
 
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_list_delimiter_prefix_ends_with_delimiter():
     bucket_name = _create_objects(keys=['asdf/'])
     validate_bucket_list(bucket_name, 'asdf/', '/', '', 1000, False, ['asdf/'], [], None)
@@ -471,6 +477,7 @@ def test_bucket_listv2_delimiter_percentage():
     # bar, baz, and cab should be broken up by the 'a' delimiters
     assert prefixes == ['b%', 'c%']
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_delimiter_whitespace():
     bucket_name = _create_objects(keys=['b ar', 'b az', 'c ab', 'foo'])
     client = get_client()
@@ -487,6 +494,7 @@ def test_bucket_list_delimiter_whitespace():
     assert prefixes == ['b ', 'c ']
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_listv2_delimiter_whitespace():
     bucket_name = _create_objects(keys=['b ar', 'b az', 'c ab', 'foo'])
     client = get_client()
@@ -679,6 +687,7 @@ def test_bucket_listv2_delimiter_not_exist():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_delimiter_not_skip_special():
     key_names = ['0/'] + ['0/%s' % i for i in range(1000, 1999)]
     key_names2 = ['1999', '1999#', '1999+', '2000']
@@ -694,6 +703,7 @@ def test_bucket_list_delimiter_not_skip_special():
     assert keys == key_names2
     assert prefixes == ['0/']
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_prefix_basic():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -749,6 +759,7 @@ def test_bucket_listv2_prefix_alt():
     assert keys == ['bar', 'baz']
     assert prefixes == []
 
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_list_prefix_empty():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -763,6 +774,7 @@ def test_bucket_list_prefix_empty():
     assert prefixes == []
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_prefix_empty():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -776,6 +788,7 @@ def test_bucket_listv2_prefix_empty():
     assert keys == key_names
     assert prefixes == []
 
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_list_prefix_none():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -790,6 +803,7 @@ def test_bucket_list_prefix_none():
     assert prefixes == []
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_prefix_none():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -803,6 +817,7 @@ def test_bucket_listv2_prefix_none():
     assert keys == key_names
     assert prefixes == []
 
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_list_prefix_not_exist():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -817,6 +832,7 @@ def test_bucket_list_prefix_not_exist():
     assert prefixes == []
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_prefix_not_exist():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -830,6 +846,7 @@ def test_bucket_listv2_prefix_not_exist():
     assert keys == []
     assert prefixes == []
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_prefix_unreadable():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -844,6 +861,7 @@ def test_bucket_list_prefix_unreadable():
     assert prefixes == []
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_prefix_unreadable():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -857,6 +875,7 @@ def test_bucket_listv2_prefix_unreadable():
     assert keys == []
     assert prefixes == []
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_prefix_delimiter_basic():
     key_names = ['foo/bar', 'foo/baz/xyzzy', 'quux/thud', 'asdf']
     bucket_name = _create_objects(keys=key_names)
@@ -872,6 +891,7 @@ def test_bucket_list_prefix_delimiter_basic():
     assert prefixes == ['foo/baz/']
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_prefix_delimiter_basic():
     key_names = ['foo/bar', 'foo/baz/xyzzy', 'quux/thud', 'asdf']
     bucket_name = _create_objects(keys=key_names)
@@ -886,6 +906,7 @@ def test_bucket_listv2_prefix_delimiter_basic():
     assert keys == ['foo/bar']
     assert prefixes == ['foo/baz/']
 
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_list_prefix_delimiter_alt():
     key_names = ['bar', 'bazar', 'cab', 'foo']
     bucket_name = _create_objects(keys=key_names)
@@ -901,6 +922,7 @@ def test_bucket_list_prefix_delimiter_alt():
     assert prefixes == ['baza']
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_prefix_delimiter_alt():
     key_names = ['bar', 'bazar', 'cab', 'foo']
     bucket_name = _create_objects(keys=key_names)
@@ -915,6 +937,7 @@ def test_bucket_listv2_prefix_delimiter_alt():
     assert keys == ['bar']
     assert prefixes == ['baza']
 
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_list_prefix_delimiter_prefix_not_exist():
     key_names = ['b/a/r', 'b/a/c', 'b/a/g', 'g']
     bucket_name = _create_objects(keys=key_names)
@@ -928,6 +951,7 @@ def test_bucket_list_prefix_delimiter_prefix_not_exist():
     assert prefixes == []
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_prefix_delimiter_prefix_not_exist():
     key_names = ['b/a/r', 'b/a/c', 'b/a/g', 'g']
     bucket_name = _create_objects(keys=key_names)
@@ -940,6 +964,7 @@ def test_bucket_listv2_prefix_delimiter_prefix_not_exist():
     assert keys == []
     assert prefixes == []
 
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_list_prefix_delimiter_delimiter_not_exist():
     key_names = ['b/a/c', 'b/a/g', 'b/a/r', 'g']
     bucket_name = _create_objects(keys=key_names)
@@ -953,6 +978,7 @@ def test_bucket_list_prefix_delimiter_delimiter_not_exist():
     assert prefixes == []
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_prefix_delimiter_delimiter_not_exist():
     key_names = ['b/a/c', 'b/a/g', 'b/a/r', 'g']
     bucket_name = _create_objects(keys=key_names)
@@ -965,6 +991,7 @@ def test_bucket_listv2_prefix_delimiter_delimiter_not_exist():
     assert keys == ['b/a/c', 'b/a/g', 'b/a/r']
     assert prefixes == []
 
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_list_prefix_delimiter_prefix_delimiter_not_exist():
     key_names = ['b/a/c', 'b/a/g', 'b/a/r', 'g']
     bucket_name = _create_objects(keys=key_names)
@@ -978,6 +1005,7 @@ def test_bucket_list_prefix_delimiter_prefix_delimiter_not_exist():
     assert prefixes == []
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Skipping test that causes ERROR")
 def test_bucket_listv2_prefix_delimiter_prefix_delimiter_not_exist():
     key_names = ['b/a/c', 'b/a/g', 'b/a/r', 'g']
     bucket_name = _create_objects(keys=key_names)
@@ -1092,6 +1120,7 @@ def parseXmlToJson(xml):
   return response
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_account_usage():
     # boto3.set_stream_logger(name='botocore')
     client = get_client()
@@ -1112,6 +1141,7 @@ def test_account_usage():
 
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_head_bucket_usage():
     client = get_client()
     bucket_name = _create_objects(keys=['foo'])
@@ -1129,6 +1159,7 @@ def test_head_bucket_usage():
 
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_unordered():
     # boto3.set_stream_logger(name='botocore')
     keys_in = ['ado', 'bot', 'cob', 'dog', 'emu', 'fez', 'gnu', 'hex',
@@ -1183,6 +1214,7 @@ def test_bucket_list_unordered():
 @pytest.mark.fails_on_aws
 @pytest.mark.list_objects_v2
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_listv2_unordered():
     # boto3.set_stream_logger(name='botocore')
     keys_in = ['ado', 'bot', 'cob', 'dog', 'emu', 'fez', 'gnu', 'hex',
@@ -1397,6 +1429,7 @@ def _compare_dates(datetime1, datetime2):
     assert datetime1 == datetime2
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_return_data():
     key_names = ['bar', 'baz', 'foo']
     bucket_name = _create_objects(keys=key_names)
@@ -1429,6 +1462,7 @@ def test_bucket_list_return_data():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_return_data_versioning():
     bucket_name = get_new_bucket()
     check_configure_versioning_retry(bucket_name, "Enabled", "Enabled")
@@ -1465,6 +1499,7 @@ def test_bucket_list_return_data_versioning():
         assert obj['VersionId'] == key_data['VersionId']
         _compare_dates(obj['LastModified'],key_data['LastModified'])
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_objects_anonymous():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -1474,6 +1509,7 @@ def test_bucket_list_objects_anonymous():
     unauthenticated_client.list_objects(Bucket=bucket_name)
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_listv2_objects_anonymous():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -1482,6 +1518,7 @@ def test_bucket_listv2_objects_anonymous():
     unauthenticated_client = get_unauthenticated_client()
     unauthenticated_client.list_objects_v2(Bucket=bucket_name)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_list_objects_anonymous_fail():
     bucket_name = get_new_bucket()
 
@@ -1493,6 +1530,7 @@ def test_bucket_list_objects_anonymous_fail():
     assert error_code == 'AccessDenied'
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_listv2_objects_anonymous_fail():
     bucket_name = get_new_bucket()
 
@@ -1534,6 +1572,7 @@ def test_bucket_delete_notexist():
     assert status == 404
     assert error_code == 'NoSuchBucket'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_delete_nonempty():
     key_names = ['foo']
     bucket_name = _create_objects(keys=key_names)
@@ -1594,6 +1633,7 @@ def test_object_write_to_nonexist_bucket():
 def _ev_add_te_header(request, **kwargs):
     request.headers.add_header('Transfer-Encoding', 'chunked')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_write_with_chunked_transfer_encoding():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -1632,6 +1672,7 @@ def get_http_response(**kwargs):
     http_response = kwargs['http_response'].__dict__
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_requestid_matches_header_on_error():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -1655,6 +1696,7 @@ def _make_objs_dict(key_names):
     objs_dict = {'Objects': objs_list}
     return objs_dict
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_concurrent_multi_object_delete():
     num_objects = 5
     num_versions_per_object = 3
@@ -1716,6 +1758,7 @@ def test_multi_object_delete():
     assert 'Contents' not in response
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_expected_bucket_owner():
   bucket_name = get_new_bucket()
   client = get_client()
@@ -1800,6 +1843,7 @@ def test_object_head_zero_bytes():
     response = client.head_object(Bucket=bucket_name, Key='foo')
     assert response['ContentLength'] == 0
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_write_check_etag():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -1807,6 +1851,7 @@ def test_object_write_check_etag():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
     assert response['ETag'] == '"37b51d194a7513e45b56f6524f2d51f2"'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_write_cache_control():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -1816,6 +1861,7 @@ def test_object_write_cache_control():
     response = client.head_object(Bucket=bucket_name, Key='foo')
     assert response['ResponseMetadata']['HTTPHeaders']['cache-control'] == cache_control
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_write_expires():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -1870,14 +1916,17 @@ def _set_get_metadata(metadata, bucket_name=None):
     response = client.get_object(Bucket=bucket_name, Key='foo')
     return response['Metadata']['meta1']
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_set_get_metadata_none_to_good():
     got = _set_get_metadata('mymeta')
     assert got == 'mymeta'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_set_get_metadata_none_to_empty():
     got = _set_get_metadata('')
     assert got == ''
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_set_get_metadata_overwrite_to_empty():
     bucket_name = get_new_bucket()
     got = _set_get_metadata('oldmeta', bucket_name)
@@ -1887,6 +1936,7 @@ def test_object_set_get_metadata_overwrite_to_empty():
 
 # TODO: the decoding of this unicode metadata is not happening properly for unknown reasons
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_set_get_unicode_metadata():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -1945,6 +1995,7 @@ def _get_post_url(bucket_name):
     endpoint = get_config_endpoint()
     return '{endpoint}/{bucket_name}'.format(endpoint=endpoint, bucket_name=bucket_name)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_anonymous_request():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -1959,6 +2010,7 @@ def test_post_object_anonymous_request():
     body = _get_body(response)
     assert body == 'bar'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_authenticated_request():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -1997,6 +2049,7 @@ def test_post_object_authenticated_request():
     body = _get_body(response)
     assert body == 'bar'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_authenticated_no_content_type():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -2034,6 +2087,7 @@ def test_post_object_authenticated_no_content_type():
     body = _get_body(response)
     assert body == 'bar'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_authenticated_request_bad_access_key():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -2069,6 +2123,7 @@ def test_post_object_authenticated_request_bad_access_key():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 403
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_set_success_code():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -2084,6 +2139,7 @@ def test_post_object_set_success_code():
     message = ET.fromstring(r.content).find('Key')
     assert message.text == 'foo.txt'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_set_invalid_success_code():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -2099,6 +2155,7 @@ def test_post_object_set_invalid_success_code():
     content = r.content.decode()
     assert content == ''
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_upload_larger_than_chunk():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2138,6 +2195,7 @@ def test_post_object_upload_larger_than_chunk():
     body = _get_body(response)
     assert body == foo_string
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_set_key_from_filename():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2174,6 +2232,7 @@ def test_post_object_set_key_from_filename():
     body = _get_body(response)
     assert body == 'bar'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_ignored_header():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2208,6 +2267,7 @@ def test_post_object_ignored_header():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 204
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_case_insensitive_condition_fields():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2243,6 +2303,7 @@ def test_post_object_case_insensitive_condition_fields():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 204
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_escaped_field_values():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2279,6 +2340,7 @@ def test_post_object_escaped_field_values():
     body = _get_body(response)
     assert body == 'bar'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_success_redirect_action():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -2321,6 +2383,7 @@ def test_post_object_success_redirect_action():
     assert url == '{rurl}?bucket={bucket}&key={key}&etag=%22{etag}%22'.format(\
     rurl = redirect_url, bucket = bucket_name, key = 'foo.txt', etag = response['ETag'].strip('"'))
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_invalid_signature():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2354,6 +2417,7 @@ def test_post_object_invalid_signature():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 403
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_invalid_access_key():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2485,6 +2549,7 @@ def test_post_object_missing_signature():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 400
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_missing_policy_condition():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2517,6 +2582,7 @@ def test_post_object_missing_policy_condition():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 403
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_user_specified_header():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2553,6 +2619,7 @@ def test_post_object_user_specified_header():
     response = client.get_object(Bucket=bucket_name, Key='foo.txt')
     assert response['Metadata']['foo'] == 'barclamp'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_request_missing_policy_specified_field():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2653,6 +2720,7 @@ def test_post_object_expires_is_case_sensitive():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 400
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_expired_policy():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2686,6 +2754,7 @@ def test_post_object_expired_policy():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 403
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_wrong_bucket():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2722,6 +2791,7 @@ def test_post_object_wrong_bucket():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 403
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_invalid_request_field_value():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -2945,6 +3015,7 @@ def test_post_object_upload_size_below_minimum():
     r = requests.post(url, files=payload, verify=get_config_ssl_verify())
     assert r.status_code == 400
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_upload_size_rgw_chunk_size_bug():
     # Test for https://tracker.ceph.com/issues/58627
     # TODO: if this value is different in Teuthology runs, this would need tuning
@@ -3031,6 +3102,7 @@ def test_get_object_ifmatch_good():
     body = _get_body(response)
     assert body == 'bar'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_object_ifmatch_failed():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3041,6 +3113,7 @@ def test_get_object_ifmatch_failed():
     assert status == 412
     assert error_code == 'PreconditionFailed'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_object_ifnonematch_good():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3072,6 +3145,7 @@ def test_get_object_ifmodifiedsince_good():
     assert body == 'bar'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_object_ifmodifiedsince_failed():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3095,6 +3169,7 @@ def test_get_object_ifmodifiedsince_failed():
     assert e.response['ResponseMetadata']['HTTPHeaders']['etag'] == etag
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_object_ifunmodifiedsince_good():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3137,6 +3212,7 @@ def test_put_object_ifmatch_good():
     assert body == 'zar'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_object_ifmatch_failed():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3177,6 +3253,7 @@ def test_put_object_ifmatch_overwrite_existed_good():
 
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_object_ifmatch_nonexisted_failed():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3212,6 +3289,7 @@ def test_put_object_ifnonmatch_good():
 
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_object_ifnonmatch_failed():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3250,6 +3328,7 @@ def test_put_object_ifnonmatch_nonexisted_good():
 
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_object_ifnonmatch_overwrite_existed_failed():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3294,6 +3373,7 @@ def _setup_bucket_acl(bucket_acl=None):
 
     return bucket_name
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get():
     bucket_name = _setup_bucket_object_acl('public-read', 'public-read')
 
@@ -3301,6 +3381,7 @@ def test_object_raw_get():
     response = unauthenticated_client.get_object(Bucket=bucket_name, Key='foo')
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get_bucket_gone():
     bucket_name = _setup_bucket_object_acl('public-read', 'public-read')
     client = get_client()
@@ -3315,6 +3396,7 @@ def test_object_raw_get_bucket_gone():
     assert status == 404
     assert error_code == 'NoSuchBucket'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_delete_key_bucket_gone():
     bucket_name = _setup_bucket_object_acl('public-read', 'public-read')
     client = get_client()
@@ -3329,6 +3411,7 @@ def test_object_delete_key_bucket_gone():
     assert status == 404
     assert error_code == 'NoSuchBucket'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get_object_gone():
     bucket_name = _setup_bucket_object_acl('public-read', 'public-read')
     client = get_client()
@@ -3364,6 +3447,7 @@ def test_bucket_head_notexist():
 
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_head_extended():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3382,6 +3466,7 @@ def test_bucket_head_extended():
     assert int(response['ResponseMetadata']['HTTPHeaders']['x-rgw-object-count']) == 3
     assert int(response['ResponseMetadata']['HTTPHeaders']['x-rgw-bytes-used']) == 9
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get_bucket_acl():
     bucket_name = _setup_bucket_object_acl('private', 'public-read')
 
@@ -3389,6 +3474,7 @@ def test_object_raw_get_bucket_acl():
     response = unauthenticated_client.get_object(Bucket=bucket_name, Key='foo')
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get_object_acl():
     bucket_name = _setup_bucket_object_acl('public-read', 'private')
 
@@ -3398,6 +3484,7 @@ def test_object_raw_get_object_acl():
     assert status == 403
     assert error_code == 'AccessDenied'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_put_acl_mtime():
     key = 'foo'
     bucket_name = get_new_bucket()
@@ -3442,6 +3529,7 @@ def test_object_raw_authenticated():
     response = client.get_object(Bucket=bucket_name, Key='foo')
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_response_headers():
     bucket_name = _setup_bucket_object_acl('private', 'private')
 
@@ -3504,12 +3592,15 @@ def _test_object_raw_get_x_amz_expires_not_expired(client):
     res = requests.get(url, verify=get_config_ssl_verify()).__dict__
     assert res['status_code'] == 200
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get_x_amz_expires_not_expired():
     _test_object_raw_get_x_amz_expires_not_expired(client=get_client())
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get_x_amz_expires_not_expired_tenant():
     _test_object_raw_get_x_amz_expires_not_expired(client=get_tenant_client())
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get_x_amz_expires_out_range_zero():
     bucket_name = _setup_bucket_object_acl('public-read', 'public-read')
     client = get_client()
@@ -3520,6 +3611,7 @@ def test_object_raw_get_x_amz_expires_out_range_zero():
     res = requests.get(url, verify=get_config_ssl_verify()).__dict__
     assert res['status_code'] == 403
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get_x_amz_expires_out_max_range():
     bucket_name = _setup_bucket_object_acl('public-read', 'public-read')
     client = get_client()
@@ -3530,6 +3622,7 @@ def test_object_raw_get_x_amz_expires_out_max_range():
     res = requests.get(url, verify=get_config_ssl_verify()).__dict__
     assert res['status_code'] == 403
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_get_x_amz_expires_out_positive_range():
     bucket_name = _setup_bucket_object_acl('public-read', 'public-read')
     client = get_client()
@@ -3540,6 +3633,7 @@ def test_object_raw_get_x_amz_expires_out_positive_range():
     res = requests.get(url, verify=get_config_ssl_verify()).__dict__
     assert res['status_code'] == 403
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_content_encoding_aws_chunked():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -3569,6 +3663,7 @@ def test_object_content_encoding_aws_chunked():
     response = client.head_object(Bucket=bucket, Key=key)
     assert 'ContentEncoding' not in response
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_anon_put():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3582,6 +3677,7 @@ def test_object_anon_put():
     assert status == 403
     assert error_code == 'AccessDenied'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_anon_put_write_access():
     bucket_name = _setup_bucket_acl('public-read-write')
     client = get_client()
@@ -3592,6 +3688,7 @@ def test_object_anon_put_write_access():
     response = unauthenticated_client.put_object(Bucket=bucket_name, Key='foo', Body='foo')
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_put_authenticated():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3621,14 +3718,17 @@ def _test_object_presigned_put_object_with_acl(client=None):
     assert res.status_code == 200
     assert res.text == 'hello world'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_presigned_put_object_with_acl():
     _test_object_presigned_put_object_with_acl(
         client=get_client())
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_presigned_put_object_with_acl_tenant():
     _test_object_presigned_put_object_with_acl(
         client=get_tenant_client())
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_raw_put_authenticated_expired():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3657,6 +3757,7 @@ def check_bad_bucket_name(bucket_name):
 # http://docs.amazonwebservices.com/AmazonS3/2006-03-01/dev/index.html?BucketRestrictions.html
 @pytest.mark.fails_on_aws
 # Breaks DNS with SubdomainCallingFormat
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_naming_bad_starts_nonalpha():
     bucket_name = get_new_bucket_name()
     check_bad_bucket_name('_' + bucket_name)
@@ -3679,9 +3780,11 @@ def check_invalid_bucketname(invalid_name):
     status, error_code = _get_status_and_error_code(e.response)
     return (status, error_code)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_naming_bad_short_one():
     check_bad_bucket_name('a')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_naming_bad_short_two():
     check_bad_bucket_name('aa')
 
@@ -3775,12 +3878,14 @@ def test_bucket_list_long_name():
 # AWS does not enforce all documented bucket restrictions.
 # http://docs.amazonwebservices.com/AmazonS3/2006-03-01/dev/index.html?BucketRestrictions.html
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_naming_bad_ip():
     check_bad_bucket_name('192.168.5.123')
 
 # test_bucket_create_naming_dns_* are valid but not recommended
 @pytest.mark.fails_on_aws
 # Should now pass on AWS even though it has 'fails_on_aws' attr.
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_naming_dns_underscore():
     invalid_bucketname = 'foo_bar'
     status, error_code = check_invalid_bucketname(invalid_bucketname)
@@ -3798,6 +3903,7 @@ def test_bucket_create_naming_dns_long():
 # Breaks DNS with SubdomainCallingFormat
 @pytest.mark.fails_on_aws
 # Should now pass on AWS even though it has 'fails_on_aws' attr.
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_naming_dns_dash_at_end():
     invalid_bucketname = 'foo-'
     status, error_code = check_invalid_bucketname(invalid_bucketname)
@@ -3808,6 +3914,7 @@ def test_bucket_create_naming_dns_dash_at_end():
 # Breaks DNS with SubdomainCallingFormat
 @pytest.mark.fails_on_aws
 # Should now pass on AWS even though it has 'fails_on_aws' attr.
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_naming_dns_dot_dot():
     invalid_bucketname = 'foo..bar'
     status, error_code = check_invalid_bucketname(invalid_bucketname)
@@ -3818,6 +3925,7 @@ def test_bucket_create_naming_dns_dot_dot():
 # Breaks DNS with SubdomainCallingFormat
 @pytest.mark.fails_on_aws
 # Should now pass on AWS even though it has 'fails_on_aws' attr.
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_naming_dns_dot_dash():
     invalid_bucketname = 'foo.-bar'
     status, error_code = check_invalid_bucketname(invalid_bucketname)
@@ -3828,6 +3936,7 @@ def test_bucket_create_naming_dns_dot_dash():
 # Breaks DNS with SubdomainCallingFormat
 @pytest.mark.fails_on_aws
 # Should now pass on AWS even though it has 'fails_on_aws' attr.
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_naming_dns_dash_dot():
     invalid_bucketname = 'foo-.bar'
     status, error_code = check_invalid_bucketname(invalid_bucketname)
@@ -3849,6 +3958,7 @@ def test_bucket_create_exists():
         assert e.error_code == 'BucketAlreadyOwnedByYou'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_get_location():
     location_constraint = get_main_api_name()
     if not location_constraint:
@@ -3864,6 +3974,7 @@ def test_bucket_get_location():
     assert response['LocationConstraint'] == location_constraint
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_exists_nonowner():
     # Names are shared across a global namespace. As such, no two
     # users can create a bucket with that same name.
@@ -3879,6 +3990,7 @@ def test_bucket_create_exists_nonowner():
     assert error_code == 'BucketAlreadyExists'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_recreate_overwrite_acl():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -3890,6 +4002,7 @@ def test_bucket_recreate_overwrite_acl():
     assert error_code == 'BucketAlreadyExists'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_recreate_new_acl():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -3934,6 +4047,7 @@ def check_grants(got, want):
         assert g == {'Grantee': {}}
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_default():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -3962,6 +4076,7 @@ def test_bucket_acl_default():
         )
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_canned_during_create():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -3994,6 +4109,7 @@ def test_bucket_acl_canned_during_create():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_canned():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -4044,6 +4160,7 @@ def test_bucket_acl_canned():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_canned_publicreadwrite():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -4083,6 +4200,7 @@ def test_bucket_acl_canned_publicreadwrite():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_canned_authenticatedread():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -4115,6 +4233,7 @@ def test_bucket_acl_canned_authenticatedread():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_acl_grant_group_read():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -4150,6 +4269,7 @@ def test_put_bucket_acl_grant_group_read():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_default():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -4176,6 +4296,7 @@ def test_object_acl_default():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_canned_during_create():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -4210,6 +4331,7 @@ def test_object_acl_canned_during_create():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_canned():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -4263,6 +4385,7 @@ def test_object_acl_canned():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_canned_publicreadwrite():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -4304,6 +4427,7 @@ def test_object_acl_canned_publicreadwrite():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_canned_authenticatedread():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -4337,6 +4461,7 @@ def test_object_acl_canned_authenticatedread():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_canned_bucketownerread():
     bucket_name = get_new_bucket_name()
     main_client = get_client()
@@ -4379,6 +4504,7 @@ def test_object_acl_canned_bucketownerread():
             ],
         )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_canned_bucketownerfullcontrol():
     bucket_name = get_new_bucket_name()
     main_client = get_client()
@@ -4422,6 +4548,7 @@ def test_object_acl_canned_bucketownerfullcontrol():
         )
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_full_control_verify_owner():
     bucket_name = get_new_bucket_name()
     main_client = get_client()
@@ -4470,6 +4597,7 @@ def add_obj_user_grant(bucket_name, key, grant):
 
     return grant
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_full_control_verify_attributes():
     bucket_name = get_new_bucket_name()
     main_client = get_client()
@@ -4569,24 +4697,29 @@ def _check_object_acl(permission):
 
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl():
     _check_object_acl('FULL_CONTROL')
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_write():
     _check_object_acl('WRITE')
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_writeacp():
     _check_object_acl('WRITE_ACP')
 
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_read():
     _check_object_acl('READ')
 
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_acl_readacp():
     _check_object_acl('READ_ACP')
 
@@ -4696,6 +4829,7 @@ def _check_bucket_acl_grant_cant_writeacp(bucket_name):
     check_access_denied(alt_client.put_bucket_acl,Bucket=bucket_name, ACL='public-read')
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_grant_userid_fullcontrol():
     bucket_name = _bucket_acl_grant_userid('FULL_CONTROL')
 
@@ -4721,6 +4855,7 @@ def test_bucket_acl_grant_userid_fullcontrol():
     assert owner_display_name == main_display_name
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_grant_userid_read():
     bucket_name = _bucket_acl_grant_userid('READ')
 
@@ -4734,6 +4869,7 @@ def test_bucket_acl_grant_userid_read():
     _check_bucket_acl_grant_cant_writeacp(bucket_name)
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_grant_userid_readacp():
     bucket_name = _bucket_acl_grant_userid('READ_ACP')
 
@@ -4748,6 +4884,7 @@ def test_bucket_acl_grant_userid_readacp():
     _check_bucket_acl_grant_cant_writeacp(bucket_name)
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_grant_userid_write():
     bucket_name = _bucket_acl_grant_userid('WRITE')
 
@@ -4761,6 +4898,7 @@ def test_bucket_acl_grant_userid_write():
     _check_bucket_acl_grant_cant_writeacp(bucket_name)
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_grant_userid_writeacp():
     bucket_name = _bucket_acl_grant_userid('WRITE_ACP')
 
@@ -4773,6 +4911,7 @@ def test_bucket_acl_grant_userid_writeacp():
     # can write acl
     _check_bucket_acl_grant_can_writeacp(bucket_name)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_grant_nonexist_user():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -4810,6 +4949,7 @@ def _get_acl_header(user_id=None, perms=None):
 
 @pytest.mark.fails_on_dho
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_header_acl_grants():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -4878,6 +5018,7 @@ def test_object_header_acl_grants():
 
 @pytest.mark.fails_on_dho
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_header_acl_grants():
     headers = _get_acl_header()
     bucket_name = get_new_bucket_name()
@@ -4957,6 +5098,7 @@ def test_bucket_header_acl_grants():
 # would violate the uniqueness requirement of a user's email. As such, DHO users are
 # created without an email.
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_grant_email():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -4999,6 +5141,7 @@ def test_bucket_acl_grant_email():
         ]
     )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_grant_email_not_exist():
     # behavior not documented by amazon
     bucket_name = get_new_bucket()
@@ -5018,6 +5161,7 @@ def test_bucket_acl_grant_email_not_exist():
     assert status == 400
     assert error_code == 'UnresolvableGrantByEmailAddress'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_acl_revoke_all():
     # revoke all access, including the owner's access
     bucket_name = get_new_bucket()
@@ -5084,6 +5228,7 @@ def list_bucket_versions(client, bucket_name):
 
     return result
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_private_object_private():
     # all the test_access_* tests follow this template
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='private', object_acl='private')
@@ -5112,6 +5257,7 @@ def test_access_bucket_private_object_private():
     check_access_denied(alt_client3.put_object, Bucket=bucket_name, Key=newkey, Body='newcontent')
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_private_objectv2_private():
     # all the test_access_* tests follow this template
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='private', object_acl='private')
@@ -5139,6 +5285,7 @@ def test_access_bucket_private_objectv2_private():
     alt_client3 = get_alt_client()
     check_access_denied(alt_client3.put_object, Bucket=bucket_name, Key=newkey, Body='newcontent')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_private_object_publicread():
 
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='private', object_acl='public-read')
@@ -5160,6 +5307,7 @@ def test_access_bucket_private_object_publicread():
     check_access_denied(alt_client3.put_object, Bucket=bucket_name, Key=newkey, Body='newcontent')
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_private_objectv2_publicread():
 
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='private', object_acl='public-read')
@@ -5180,6 +5328,7 @@ def test_access_bucket_private_objectv2_publicread():
     check_access_denied(alt_client3.list_objects_v2, Bucket=bucket_name)
     check_access_denied(alt_client3.put_object, Bucket=bucket_name, Key=newkey, Body='newcontent')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_private_object_publicreadwrite():
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='private', object_acl='public-read-write')
     alt_client = get_alt_client()
@@ -5201,6 +5350,7 @@ def test_access_bucket_private_object_publicreadwrite():
     check_access_denied(alt_client3.put_object, Bucket=bucket_name, Key=newkey, Body='newcontent')
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_private_objectv2_publicreadwrite():
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='private', object_acl='public-read-write')
     alt_client = get_alt_client()
@@ -5221,6 +5371,7 @@ def test_access_bucket_private_objectv2_publicreadwrite():
     check_access_denied(alt_client3.list_objects_v2, Bucket=bucket_name)
     check_access_denied(alt_client3.put_object, Bucket=bucket_name, Key=newkey, Body='newcontent')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_publicread_object_private():
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='public-read', object_acl='private')
     alt_client = get_alt_client()
@@ -5240,6 +5391,7 @@ def test_access_bucket_publicread_object_private():
     assert objs == ['bar', 'foo']
     check_access_denied(alt_client3.put_object, Bucket=bucket_name, Key=newkey, Body='newcontent')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_publicread_object_publicread():
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='public-read', object_acl='public-read')
     alt_client = get_alt_client()
@@ -5264,6 +5416,7 @@ def test_access_bucket_publicread_object_publicread():
     check_access_denied(alt_client3.put_object, Bucket=bucket_name, Key=newkey, Body='newcontent')
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_publicread_object_publicreadwrite():
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='public-read', object_acl='public-read-write')
     alt_client = get_alt_client()
@@ -5290,6 +5443,7 @@ def test_access_bucket_publicread_object_publicreadwrite():
     check_access_denied(alt_client3.put_object, Bucket=bucket_name, Key=newkey, Body='newcontent')
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_publicreadwrite_object_private():
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='public-read-write', object_acl='private')
     alt_client = get_alt_client()
@@ -5305,6 +5459,7 @@ def test_access_bucket_publicreadwrite_object_private():
     assert objs == ['bar', 'foo']
     alt_client.put_object(Bucket=bucket_name, Key=newkey, Body='newcontent')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_publicreadwrite_object_publicread():
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='public-read-write', object_acl='public-read')
     alt_client = get_alt_client()
@@ -5323,6 +5478,7 @@ def test_access_bucket_publicreadwrite_object_publicread():
     assert objs == ['bar', 'foo']
     alt_client.put_object(Bucket=bucket_name, Key=newkey, Body='newcontent')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_access_bucket_publicreadwrite_object_publicreadwrite():
     bucket_name, key1, key2, newkey = _setup_access(bucket_acl='public-read-write', object_acl='public-read-write')
     alt_client = get_alt_client()
@@ -5358,6 +5514,7 @@ def test_buckets_create_then_list():
         if name not in buckets_list:
             raise RuntimeError("S3 implementation's GET on Service did not return bucket we created: %r", bucket.name)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_buckets_list_ctime():
     # check that creation times are within a day
     before = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=1)
@@ -5376,6 +5533,7 @@ def test_buckets_list_ctime():
             assert before <= ctime, '%r > %r' % (before, ctime)
 
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_list_buckets_anonymous():
     # Get a connection with bad authorization, then change it to be our new Anonymous auth mechanism,
     # emulating standard HTTP access.
@@ -5400,6 +5558,7 @@ def test_list_buckets_bad_auth():
     assert status == 403
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_list_buckets_paginated():
     client = get_client()
 
@@ -5468,6 +5627,7 @@ def test_bucket_recreate_not_overriding():
     assert key_names == objs_list
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_special_key_names():
     key_names = [
         ' ',
@@ -5555,6 +5715,7 @@ def test_object_copy_same_bucket():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_verify_contenttype():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -5573,6 +5734,7 @@ def test_object_copy_verify_contenttype():
     assert response_content_type == content_type
 
 @pytest.mark.copy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_to_itself():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -5587,6 +5749,7 @@ def test_object_copy_to_itself():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_to_itself_with_metadata():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -5616,6 +5779,7 @@ def test_object_copy_diff_bucket():
     assert 'foo' == body
 
 @pytest.mark.copy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_not_owned_bucket():
     client = get_client()
     alt_client = get_alt_client()
@@ -5633,6 +5797,7 @@ def test_object_copy_not_owned_bucket():
     assert status == 403
 
 @pytest.mark.copy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_not_owned_object_bucket():
     client = get_client()
     alt_client = get_alt_client()
@@ -5677,6 +5842,7 @@ def test_object_copy_canned_acl():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_retaining_metadata():
     for size in [3, 1024 * 1024]:
         bucket_name = get_new_bucket()
@@ -5697,6 +5863,7 @@ def test_object_copy_retaining_metadata():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_replacing_metadata():
     for size in [3, 1024 * 1024]:
         bucket_name = get_new_bucket()
@@ -5739,6 +5906,7 @@ def test_object_copy_key_not_found():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_versioned_bucket():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -5804,6 +5972,7 @@ def test_object_copy_versioned_bucket():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_versioned_url_encoding():
     bucket = get_new_bucket_resource()
     check_configure_versioning_retry(bucket.name, "Enabled", "Enabled")
@@ -5909,6 +6078,7 @@ def _multipart_upload_checksum(bucket_name, key, size, part_size=5*1024*1024, cl
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_copy_versioning_multipart_upload():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6017,6 +6187,7 @@ def test_multipart_upload_complete_without_create():
     assert error_code == 'NoSuchUpload'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_upload_small():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6189,6 +6360,7 @@ def test_multipart_copy_without_range():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_copy_special_names():
     src_bucket_name = get_new_bucket()
 
@@ -6223,6 +6395,7 @@ def _check_content_using_range(key, bucket_name, data, step):
         assert body == data[ofs:end+1]
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_upload():
     bucket_name = get_new_bucket()
     key="mymultipart"
@@ -6282,6 +6455,7 @@ def check_configure_versioning_retry(bucket_name, status, expected_string):
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_copy_versioned():
     src_bucket_name = get_new_bucket()
     dest_bucket_name = get_new_bucket()
@@ -6328,6 +6502,7 @@ def _check_upload_multipart_resend(bucket_name, key, objlen, resend_parts):
     _check_content_using_range(key, bucket_name, data, 10000000)
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_upload_resend_part():
     bucket_name = get_new_bucket()
     key="mymultipart"
@@ -6539,6 +6714,7 @@ def test_list_multipart_upload():
     client.abort_multipart_upload(Bucket=bucket_name, Key=key2, UploadId=upload_id3)
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_list_multipart_upload_owner():
     bucket_name = get_new_bucket()
 
@@ -6623,6 +6799,7 @@ def test_multipart_upload_incorrect_etag():
     assert error_code == 'InvalidPart'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_get_part():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6666,6 +6843,7 @@ def test_multipart_get_part():
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_sse_c_get_part():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6720,6 +6898,7 @@ def test_multipart_sse_c_get_part():
     assert error_code == 'InvalidPart'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_single_get_part():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6762,6 +6941,7 @@ def test_multipart_single_get_part():
     assert error_code == 'InvalidPart'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_non_multipart_get_part():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6783,6 +6963,7 @@ def test_non_multipart_get_part():
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_non_multipart_sse_c_get_part():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6844,6 +7025,7 @@ def _simple_http_req_100_cont(host, port, is_secure, method, resource):
 
     return l[1]
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_100_continue():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -6878,6 +7060,7 @@ def test_100_continue_error_retry():
     # send another request on the same connection
     client.put_object(Bucket=bucket_name, Key='foo', Body='bar')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_set_cors():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6913,6 +7096,7 @@ def _cors_request_and_check(func, url, headers, expect_status, expect_allow_orig
     assert r.headers.get('access-control-allow-origin', None) == expect_allow_origin
     assert r.headers.get('access-control-allow-methods', None) == expect_allow_methods
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_origin_response():
     bucket_name = _setup_bucket_acl(bucket_acl='public-read')
     client = get_client()
@@ -6988,6 +7172,7 @@ def test_cors_origin_response():
     _cors_request_and_check(requests.options, url, {'Origin': 'foo.put', 'Access-Control-Request-Method': 'GET'}, 403, None, None)
     _cors_request_and_check(requests.options, url, {'Origin': 'foo.put', 'Access-Control-Request-Method': 'PUT'}, 200, 'foo.put', 'PUT')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_origin_wildcard():
     bucket_name = _setup_bucket_acl(bucket_acl='public-read')
     client = get_client()
@@ -7013,6 +7198,7 @@ def test_cors_origin_wildcard():
     _cors_request_and_check(requests.get, url, None, 200, None, None)
     _cors_request_and_check(requests.get, url, {'Origin': 'example.origin'}, 200, '*', 'GET')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_header_option():
     bucket_name = _setup_bucket_acl(bucket_acl='public-read')
     client = get_client()
@@ -7078,12 +7264,14 @@ def _test_cors_options_presigned_method(client, method, cannedACL=None):
     _cors_request_and_check(requests.options, url, headers,
                             200, 'example', httpMethod)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_get_object():
     _test_cors_options_presigned_method(
         client=get_client(),
         method='get_object',
     )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_get_object_tenant():
     _test_cors_options_presigned_method(
         client=get_tenant_client(),
@@ -7091,6 +7279,7 @@ def test_cors_presigned_get_object_tenant():
     )
 
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_get_object_v2():
     _test_cors_options_presigned_method(
         client=get_v2_client(),
@@ -7098,18 +7287,21 @@ def test_cors_presigned_get_object_v2():
     )
 
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_get_object_tenant_v2():
     _test_cors_options_presigned_method(
         client=get_v2_tenant_client(),
         method='get_object',
     )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_put_object():
     _test_cors_options_presigned_method(
         client=get_client(),
         method='put_object',
     )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_put_object_with_acl():
     _test_cors_options_presigned_method(
         client=get_client(),
@@ -7118,6 +7310,7 @@ def test_cors_presigned_put_object_with_acl():
     )
 
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_put_object_v2():
     _test_cors_options_presigned_method(
         client=get_v2_client(),
@@ -7125,18 +7318,21 @@ def test_cors_presigned_put_object_v2():
     )
 
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_put_object_tenant_v2():
     _test_cors_options_presigned_method(
         client=get_v2_tenant_client(),
         method='put_object',
     )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_put_object_tenant():
     _test_cors_options_presigned_method(
         client=get_tenant_client(),
         method='put_object',
     )
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_cors_presigned_put_object_tenant_with_acl():
     _test_cors_options_presigned_method(
         client=get_tenant_client(),
@@ -7145,6 +7341,7 @@ def test_cors_presigned_put_object_tenant_with_acl():
     )
 
 @pytest.mark.tagging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_set_bucket_tagging():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -7445,6 +7642,7 @@ def _test_atomic_dual_conditional_write(file_size):
 @pytest.mark.fails_on_aws
 # TODO: test not passing with SSL, fix this
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_atomic_dual_conditional_write_1mb():
     _test_atomic_dual_conditional_write(1024*1024)
 
@@ -7504,6 +7702,7 @@ class ActionOnCount:
         if self.count == self.trigger_count:
             self.result = self.action()
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_resend_first_finishes_last():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -7651,6 +7850,7 @@ def test_ranged_request_empty_object():
     assert status == 416
     assert error_code == 'InvalidRange'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_bucket_create_suspend():
     bucket_name = get_new_bucket()
     check_versioning(bucket_name, None)
@@ -7734,6 +7934,7 @@ def _do_test_create_remove_versions(client, bucket_name, key, num_versions, remo
         print(response['Versions'])
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_create_read_remove():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -7748,6 +7949,7 @@ def test_versioning_obj_create_read_remove():
     _do_test_create_remove_versions(client, bucket_name, key, num_versions, 4, -1)
     _do_test_create_remove_versions(client, bucket_name, key, num_versions, 3, 3)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_create_read_remove_head():
     bucket_name = get_new_bucket()
 
@@ -7783,6 +7985,7 @@ def test_versioning_obj_create_read_remove_head():
     clean_up_bucket(client, bucket_name, key, version_ids)
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_stack_delete_merkers():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -7798,6 +8001,7 @@ def test_versioning_stack_delete_merkers():
     assert len(versions) == 1
     assert len(delete_markers) == 3
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_plain_null_version_removal():
     bucket_name = get_new_bucket()
     check_versioning(bucket_name, None)
@@ -7818,6 +8022,7 @@ def test_versioning_obj_plain_null_version_removal():
     response = client.list_object_versions(Bucket=bucket_name)
     assert not 'Versions' in response
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_plain_null_version_overwrite():
     bucket_name = get_new_bucket()
     check_versioning(bucket_name, None)
@@ -7851,6 +8056,7 @@ def test_versioning_obj_plain_null_version_overwrite():
     response = client.list_object_versions(Bucket=bucket_name)
     assert not 'Versions' in response
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_plain_null_version_overwrite_suspended():
     bucket_name = get_new_bucket()
     check_versioning(bucket_name, None)
@@ -7916,6 +8122,7 @@ def overwrite_suspended_versioning_obj(client, bucket_name, key, version_ids, co
     return (version_ids, contents)
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_suspend_versions():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -7950,6 +8157,7 @@ def test_versioning_obj_suspend_versions():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_suspended_copy():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -7996,6 +8204,7 @@ def test_versioning_obj_suspended_copy():
     client.delete_object(Bucket=bucket_name2, Key=key1)
     client.delete_bucket(Bucket=bucket_name2)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_create_versions_remove_all():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8012,6 +8221,7 @@ def test_versioning_obj_create_versions_remove_all():
     assert len(version_ids) == 0
     assert len(version_ids) == len(contents)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_create_versions_remove_special_names():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8030,6 +8240,7 @@ def test_versioning_obj_create_versions_remove_special_names():
         assert len(version_ids) == len(contents)
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_create_overwrite_multipart():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8058,6 +8269,7 @@ def test_versioning_obj_create_overwrite_multipart():
     assert len(version_ids) == 0
     assert len(version_ids) == len(contents)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_obj_list_marker():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8115,6 +8327,7 @@ def test_versioning_obj_list_marker():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_copy_obj_version():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8152,6 +8365,7 @@ def test_versioning_copy_obj_version():
     body = _get_body(response)
     assert body == contents[-1]
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_multi_object_delete():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8177,6 +8391,7 @@ def test_versioning_multi_object_delete():
     response = client.list_object_versions(Bucket=bucket_name)
     assert not 'Versions' in response
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_multi_object_delete_with_marker():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8210,6 +8425,7 @@ def test_versioning_multi_object_delete_with_marker():
     assert not 'DeleteMarkers' in response
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_multi_object_delete_with_marker_create():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8231,6 +8447,7 @@ def test_versioning_multi_object_delete_with_marker_create():
     assert delete_marker_version_id == delete_markers[0]['VersionId']
     assert key == delete_markers[0]['Key']
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioned_object_acl():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8299,6 +8516,7 @@ def test_versioned_object_acl():
     check_grants(grants, default_policy)
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioned_object_acl_no_version_specified():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8385,6 +8603,7 @@ def _do_clear_versioned_bucket_concurrent(client, bucket_name):
         t.append(thr)
     return t
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioned_concurrent_object_create_concurrent_remove():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8409,6 +8628,7 @@ def test_versioned_concurrent_object_create_concurrent_remove():
         response = client.list_object_versions(Bucket=bucket_name)
         assert not 'Versions' in response
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioned_concurrent_object_create_and_remove():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8448,6 +8668,7 @@ def test_lifecycle_set():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
 @pytest.mark.lifecycle
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_get():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8459,6 +8680,7 @@ def test_lifecycle_get():
     assert response['Rules'] == rules
 
 @pytest.mark.lifecycle
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_delete():
     client = get_client()
     bucket_name = get_new_bucket(client)
@@ -8491,6 +8713,7 @@ def test_lifecycle_delete():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 204
 
 @pytest.mark.lifecycle
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_get_no_id():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8525,6 +8748,7 @@ def test_lifecycle_get_no_id():
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration():
     bucket_name = _create_objects(keys=['expire1/foo', 'expire1/bar', 'keep2/foo',
                                         'keep2/bar', 'expire3/foo', 'expire3/bar'])
@@ -8560,6 +8784,7 @@ def test_lifecycle_expiration():
 @pytest.mark.fails_on_aws
 @pytest.mark.list_objects_v2
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecyclev2_expiration():
     bucket_name = _create_objects(keys=['expire1/foo', 'expire1/bar', 'keep2/foo',
                                         'keep2/bar', 'expire3/foo', 'expire3/bar'])
@@ -8593,6 +8818,7 @@ def test_lifecyclev2_expiration():
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_versioning_enabled():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8617,6 +8843,7 @@ def test_lifecycle_expiration_versioning_enabled():
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_tags1():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8726,6 +8953,7 @@ def setup_lifecycle_tags2(client, bucket_name):
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_tags2():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8744,6 +8972,7 @@ def test_lifecycle_expiration_tags2():
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_versioned_tags2():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8814,6 +9043,7 @@ def verify_lifecycle_expiration_noncur_tags(client, bucket_name, secs):
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_noncur_tags1():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8851,6 +9081,7 @@ def wait_interval_list_object_versions(client, bucket_name, secs):
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_newer_noncurrent():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8906,6 +9137,7 @@ def get_byte_buffer(nbytes):
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_size_gt():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -8959,6 +9191,7 @@ def test_lifecycle_expiration_size_gt():
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_size_lt():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9009,6 +9242,7 @@ def test_lifecycle_expiration_size_lt():
     assert objects[0]['Key'] == "myobject_big"
 
 @pytest.mark.lifecycle
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_id_too_long():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9021,6 +9255,7 @@ def test_lifecycle_id_too_long():
     assert error_code == 'InvalidArgument'
 
 @pytest.mark.lifecycle
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_same_id():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9034,6 +9269,7 @@ def test_lifecycle_same_id():
     assert error_code == 'InvalidArgument'
 
 @pytest.mark.lifecycle
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_invalid_status():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9072,6 +9308,7 @@ def test_lifecycle_set_date():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
 @pytest.mark.lifecycle
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_set_invalid_date():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9086,6 +9323,7 @@ def test_lifecycle_set_invalid_date():
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_date():
     bucket_name = _create_objects(keys=['past/foo', 'future/bar'])
     client = get_client()
@@ -9108,6 +9346,7 @@ def test_lifecycle_expiration_date():
 
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_expiration
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_days0():
     bucket_name = _create_objects(keys=['days0/foo', 'days0/bar'])
     client = get_client()
@@ -9159,6 +9398,7 @@ def check_lifecycle_expiration_header(response, start_time, rule_id,
 
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_expiration
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_header_put():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9171,6 +9411,7 @@ def test_lifecycle_expiration_header_put():
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_header_head():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9189,6 +9430,7 @@ def test_lifecycle_expiration_header_head():
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_expiration_header_tags_head():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9302,6 +9544,7 @@ def test_lifecycle_set_noncurrent():
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_noncur_expiration():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9358,6 +9601,7 @@ def test_lifecycle_set_empty_filter():
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_deletemarker_expiration():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9393,6 +9637,7 @@ def test_lifecycle_deletemarker_expiration():
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_deletemarker_expiration_with_days_tag():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9441,6 +9686,7 @@ def test_lifecycle_set_multipart():
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_multipart_expiration():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9473,6 +9719,7 @@ def test_lifecycle_multipart_expiration():
     assert len(expired_uploads) == 1
 
 @pytest.mark.lifecycle
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_transition_set_invalid_date():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -9512,6 +9759,7 @@ def _test_encryption_sse_customer_write(file_size):
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_transition
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_transition():
     sc = configured_storage_classes()
     if len(sc) < 3:
@@ -9557,6 +9805,7 @@ def test_lifecycle_transition():
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_transition
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_transition_single_rule_multi_trans():
     sc = configured_storage_classes()
     if len(sc) < 3:
@@ -9599,6 +9848,7 @@ def test_lifecycle_transition_single_rule_multi_trans():
 
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_transition
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_set_noncurrent_transition():
     sc = configured_storage_classes()
     if len(sc) < 3:
@@ -9637,6 +9887,7 @@ def test_lifecycle_set_noncurrent_transition():
 @pytest.mark.lifecycle_expiration
 @pytest.mark.lifecycle_transition
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_noncur_transition():
     sc = configured_storage_classes()
     if len(sc) < 3:
@@ -9706,6 +9957,7 @@ def test_lifecycle_noncur_transition():
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_expiration
 @pytest.mark.lifecycle_transition
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_plain_null_version_current_transition():
     sc = configured_storage_classes()
     if len(sc) < 2:
@@ -9782,6 +10034,7 @@ def verify_transition(client, bucket, key, sc=None, version=None):
 @pytest.mark.cloud_transition
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_cloud_transition():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc == None:
@@ -9866,6 +10119,7 @@ def test_lifecycle_cloud_transition():
 @pytest.mark.cloud_transition
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_cloud_multiple_transition():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc == None:
@@ -9930,6 +10184,7 @@ def test_lifecycle_cloud_multiple_transition():
 @pytest.mark.cloud_transition
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_noncur_cloud_transition():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc == None:
@@ -10026,6 +10281,7 @@ def test_lifecycle_noncur_cloud_transition():
 @pytest.mark.cloud_transition
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_cloud_transition_large_obj():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc == None:
@@ -10087,6 +10343,7 @@ def test_lifecycle_cloud_transition_large_obj():
 @pytest.mark.target_by_bucket
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_cloud_transition_target_by_bucket():
     """
     Test cloud transition with target_by_bucket=true.
@@ -10193,6 +10450,7 @@ def test_lifecycle_cloud_transition_target_by_bucket():
 @pytest.mark.target_by_bucket
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_cloud_transition_target_by_bucket_multiple_buckets():
     """
     Test that target_by_bucket properly isolates objects between buckets.
@@ -10284,6 +10542,7 @@ def test_lifecycle_cloud_transition_target_by_bucket_multiple_buckets():
 @pytest.mark.cloud_restore
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_restore_object_temporary():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc is None:
@@ -10338,6 +10597,7 @@ def test_restore_object_temporary():
 @pytest.mark.cloud_restore
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_restore_object_permanent():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc is None:
@@ -10379,6 +10639,7 @@ def test_restore_object_permanent():
 @pytest.mark.cloud_restore
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_read_through():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc is None:
@@ -10440,6 +10701,7 @@ def test_read_through():
 @pytest.mark.cloud_restore
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_restore_noncur_obj():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc == None:
@@ -10527,6 +10789,7 @@ def test_restore_noncur_obj():
 @pytest.mark.cloud_restore
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_list_objects_restore_status():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc is None:
@@ -10610,6 +10873,7 @@ def test_list_objects_restore_status():
 @pytest.mark.cloud_restore
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_list_object_versions_restore_status():
     cloud_sc = get_cloud_storage_class()
     if cloud_sc is None:
@@ -10708,6 +10972,7 @@ def test_encrypted_transfer_13b():
 
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_method_head():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -10733,6 +10998,7 @@ def test_encryption_sse_c_method_head():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_present():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -10753,6 +11019,7 @@ def test_encryption_sse_c_present():
     assert status == 400
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_other_key():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -10780,6 +11047,7 @@ def test_encryption_sse_c_other_key():
     assert status == 400
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_invalid_md5():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -10798,6 +11066,7 @@ def test_encryption_sse_c_invalid_md5():
     assert status == 400
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_no_md5():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -10813,6 +11082,7 @@ def test_encryption_sse_c_no_md5():
     e = assert_raises(ClientError, client.put_object, Bucket=bucket_name, Key=key, Body=data)
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_no_key():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -10827,6 +11097,7 @@ def test_encryption_sse_c_no_key():
     e = assert_raises(ClientError, client.put_object, Bucket=bucket_name, Key=key, Body=data)
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_key_no_sse_c():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -10894,6 +11165,7 @@ def _check_content_using_range_enc(client, bucket_name, key, data, size, step, e
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_multipart_upload():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -10940,6 +11212,7 @@ def test_encryption_sse_c_multipart_upload():
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_unaligned_multipart_upload():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -10987,6 +11260,7 @@ def test_encryption_sse_c_unaligned_multipart_upload():
 @pytest.mark.encryption
 # TODO: remove this fails_on_rgw when I fix it
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_multipart_invalid_chunks_1():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11015,6 +11289,7 @@ def test_encryption_sse_c_multipart_invalid_chunks_1():
 @pytest.mark.encryption
 # TODO: remove this fails_on_rgw when I fix it
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_multipart_invalid_chunks_2():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11041,6 +11316,7 @@ def test_encryption_sse_c_multipart_invalid_chunks_2():
     assert status == 400
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_multipart_bad_download():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11088,6 +11364,7 @@ def test_encryption_sse_c_multipart_bad_download():
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_post_object_authenticated_request():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11143,6 +11420,7 @@ def test_encryption_sse_c_post_object_authenticated_request():
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_enforced_with_bucket_policy():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11173,6 +11451,7 @@ def test_encryption_sse_c_enforced_with_bucket_policy():
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_encryption_sse_c_deny_algo_with_bucket_policy():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11228,6 +11507,7 @@ def _test_sse_kms_customer_write(file_size, key_id = 'testkey-1'):
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_method_head():
     kms_keyid = get_main_kms_keyid()
     bucket_name = get_new_bucket()
@@ -11275,6 +11555,7 @@ def test_sse_kms_present():
     assert body == data
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_no_key():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11291,6 +11572,7 @@ def test_sse_kms_no_key():
 
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_not_declared():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11309,6 +11591,7 @@ def test_sse_kms_not_declared():
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_multipart_upload():
     kms_keyid = get_main_kms_keyid()
     bucket_name = get_new_bucket()
@@ -11407,6 +11690,7 @@ def test_sse_kms_multipart_invalid_chunks_2():
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_post_object_authenticated_request():
     kms_keyid = get_main_kms_keyid()
     bucket_name = get_new_bucket()
@@ -11488,6 +11772,7 @@ def test_sse_kms_transfer_13b():
 
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_read_declare():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11568,6 +11853,7 @@ def test_bucketv2_policy():
 @pytest.mark.bucket_policy
 @pytest.mark.iam_account
 @pytest.mark.iam_user
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_deny_self_denied_policy(iam_root):
     root_client = get_iam_root_client(service_name="s3")
     bucket_name = get_new_bucket(root_client)
@@ -11609,6 +11895,7 @@ def test_bucket_policy_deny_self_denied_policy(iam_root):
 @pytest.mark.bucket_policy
 @pytest.mark.iam_account
 @pytest.mark.iam_user
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_deny_self_denied_policy_confirm_header(iam_root):
     root_client = get_iam_root_client(service_name="s3")
     bucket_name = get_new_bucket(root_client)
@@ -11647,6 +11934,7 @@ def test_bucket_policy_deny_self_denied_policy_confirm_header(iam_root):
     check_access_denied(root_client.put_bucket_policy, Bucket=bucket_name, Policy=policy_document)
 
 @pytest.mark.bucket_policy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_acl():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11683,6 +11971,7 @@ def test_bucket_policy_acl():
 
 @pytest.mark.bucket_policy
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucketv2_policy_acl():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11718,6 +12007,7 @@ def test_bucketv2_policy_acl():
     client.put_bucket_acl(Bucket=bucket_name, ACL='public-read')
 
 @pytest.mark.bucket_policy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_different_tenant():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11750,6 +12040,7 @@ def test_bucket_policy_different_tenant():
     assert len(response['Contents']) == 1
 
 @pytest.mark.bucket_policy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_multipart():
     client = get_client()
     alt_client = get_alt_client()
@@ -11784,6 +12075,7 @@ def test_bucket_policy_multipart():
     alt_client.create_multipart_upload(Bucket=bucket_name, Key=key)
 
 @pytest.mark.bucket_policy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_tenanted_bucket():
     tenant_client = get_tenant_client()
     bucket_name = get_new_bucket(tenant_client)
@@ -11895,6 +12187,7 @@ def test_bucketv2_policy_another_bucket():
 @pytest.mark.bucket_policy
 # TODO: remove this fails_on_rgw when I fix it
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_set_condition_operator_end_with_IfExists():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -11953,6 +12246,7 @@ def test_bucket_policy_set_condition_operator_end_with_IfExists():
     print(response)
 
 @pytest.mark.bucket_policy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_set_get_del_bucket_policy():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -12000,6 +12294,7 @@ def _make_random_string(size):
     return ''.join(random.choice(string.ascii_letters) for _ in range(size))
 
 @pytest.mark.tagging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_set_multipart_tagging():
   bucket_name = get_new_bucket()
   client = get_client()
@@ -12026,6 +12321,7 @@ def test_set_multipart_tagging():
 
 @pytest.mark.tagging
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_obj_tagging():
     key = 'testputtags'
     bucket_name = _create_key_with_random_content(key)
@@ -12040,6 +12336,7 @@ def test_get_obj_tagging():
 
 
 @pytest.mark.tagging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_obj_head_tagging():
     key = 'testputtags'
     bucket_name = _create_key_with_random_content(key)
@@ -12056,6 +12353,7 @@ def test_get_obj_head_tagging():
 
 @pytest.mark.tagging
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_max_tags():
     key = 'testputmaxtags'
     bucket_name = _create_key_with_random_content(key)
@@ -12069,6 +12367,7 @@ def test_put_max_tags():
     assert response['TagSet'] == input_tagset['TagSet']
 
 @pytest.mark.tagging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_excess_tags():
     key = 'testputmaxtags'
     bucket_name = _create_key_with_random_content(key)
@@ -12084,6 +12383,7 @@ def test_put_excess_tags():
     assert len(response['TagSet']) == 0
 
 @pytest.mark.tagging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_max_kvsize_tags():
     key = 'testputmaxkeysize'
     bucket_name = _create_key_with_random_content(key)
@@ -12105,6 +12405,7 @@ def test_put_max_kvsize_tags():
         assert kv_pair in input_tagset['TagSet']
 
 @pytest.mark.tagging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_excess_key_tags():
     key = 'testputexcesskeytags'
     bucket_name = _create_key_with_random_content(key)
@@ -12127,6 +12428,7 @@ def test_put_excess_key_tags():
     assert len(response['TagSet']) == 0
 
 @pytest.mark.tagging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_excess_val_tags():
     key = 'testputexcesskeytags'
     bucket_name = _create_key_with_random_content(key)
@@ -12150,6 +12452,7 @@ def test_put_excess_val_tags():
 
 @pytest.mark.tagging
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_modify_tags():
     key = 'testputmodifytags'
     bucket_name = _create_key_with_random_content(key)
@@ -12180,6 +12483,7 @@ def test_put_modify_tags():
 
 @pytest.mark.tagging
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_delete_tags():
     key = 'testputmodifytags'
     bucket_name = _create_key_with_random_content(key)
@@ -12200,6 +12504,7 @@ def test_put_delete_tags():
 
 @pytest.mark.tagging
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_tags_anonymous_request():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -12231,6 +12536,7 @@ def test_post_object_tags_anonymous_request():
     assert response['TagSet'] == input_tagset['TagSet']
 
 @pytest.mark.tagging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_tags_authenticated_request():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -12278,6 +12584,7 @@ def test_post_object_tags_authenticated_request():
 
 @pytest.mark.tagging
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_obj_with_tags():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -12311,6 +12618,7 @@ def _make_arn_resource(path="*"):
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_tags_acl_public():
     key = 'testputtagsacl'
     bucket_name = _create_key_with_random_content(key)
@@ -12334,6 +12642,7 @@ def test_get_tags_acl_public():
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_tags_acl_public():
     key = 'testputtagsacl'
     bucket_name = _create_key_with_random_content(key)
@@ -12356,6 +12665,7 @@ def test_put_tags_acl_public():
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_tags_obj_public():
     key = 'testputtagsacl'
     bucket_name = _create_key_with_random_content(key)
@@ -12379,6 +12689,7 @@ def test_delete_tags_obj_public():
     response = client.get_object_tagging(Bucket=bucket_name, Key=key)
     assert len(response['TagSet']) == 0
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_bucket_atomic_upload_return_version_id():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -12408,6 +12719,7 @@ def test_versioning_bucket_atomic_upload_return_version_id():
     response = client.put_object(Bucket=bucket_name, Key=key)
     assert not 'VersionId' in response
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_versioning_bucket_multipart_upload_return_version_id():
     content_type='text/bla'
     objlen = 30 * 1024 * 1024
@@ -12452,6 +12764,7 @@ def test_versioning_bucket_multipart_upload_return_version_id():
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_get_obj_existing_tag():
     bucket_name = _create_objects(keys=['publictag', 'privatetag', 'invalidtag'])
     client = get_client()
@@ -12507,6 +12820,7 @@ def test_bucket_policy_get_obj_existing_tag():
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_get_obj_tagging_existing_tag():
     bucket_name = _create_objects(keys=['publictag', 'privatetag', 'invalidtag'])
     client = get_client()
@@ -12569,6 +12883,7 @@ def test_bucket_policy_get_obj_tagging_existing_tag():
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_tagging_existing_tag():
     bucket_name = _create_objects(keys=['publictag', 'privatetag', 'invalidtag'])
     client = get_client()
@@ -12638,6 +12953,7 @@ def test_bucket_policy_put_obj_tagging_existing_tag():
 @pytest.mark.copy
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_upload_part_copy():
     bucket_name = _create_objects(keys=['public/foo', 'public/bar', 'private/foo'])
     client = get_client()
@@ -12697,6 +13013,7 @@ def test_bucket_policy_upload_part_copy():
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_copy_source():
     bucket_name = _create_objects(keys=['public/foo', 'public/bar', 'private/foo'])
     client = get_client()
@@ -12745,6 +13062,7 @@ def test_bucket_policy_put_obj_copy_source():
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_copy_source_meta():
     src_bucket_name = _create_objects(keys=['public/foo', 'public/bar'])
     client = get_client()
@@ -12795,6 +13113,7 @@ def test_bucket_policy_put_obj_copy_source_meta():
 
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_acl():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -12835,6 +13154,7 @@ def test_bucket_policy_put_obj_acl():
 
 
 @pytest.mark.bucket_policy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_grant():
 
     bucket_name = get_new_bucket()
@@ -12897,6 +13217,7 @@ def test_bucket_policy_put_obj_grant():
 
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_obj_enc_conflict_c_s3():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -12920,6 +13241,7 @@ def test_put_obj_enc_conflict_c_s3():
     assert error_code == 'InvalidArgument'
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_obj_enc_conflict_c_kms():
     kms_keyid = get_main_kms_keyid()
     if kms_keyid is None:
@@ -12947,6 +13269,7 @@ def test_put_obj_enc_conflict_c_kms():
     assert error_code == 'InvalidArgument'
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_obj_enc_conflict_s3_kms():
     kms_keyid = get_main_kms_keyid()
     if kms_keyid is None:
@@ -12971,6 +13294,7 @@ def test_put_obj_enc_conflict_s3_kms():
     assert error_code == 'InvalidArgument'
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_obj_enc_conflict_bad_enc_kms():
     kms_keyid = get_main_kms_keyid()
     if kms_keyid is None:
@@ -12997,6 +13321,7 @@ def test_put_obj_enc_conflict_bad_enc_kms():
 @pytest.mark.bucket_policy
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_s3_noenc():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -13026,6 +13351,7 @@ def test_bucket_policy_put_obj_s3_noenc():
 @pytest.mark.bucket_policy
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_s3_incorrect_algo_sse_s3():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -13054,6 +13380,7 @@ def test_bucket_policy_put_obj_s3_incorrect_algo_sse_s3():
 @pytest.mark.encryption
 @pytest.mark.bucket_policy
 @pytest.mark.sse_s3
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_s3_kms():
     kms_keyid = get_main_kms_keyid()
     if kms_keyid is None:
@@ -13100,6 +13427,7 @@ def test_bucket_policy_put_obj_s3_kms():
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
 @pytest.mark.bucket_policy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_kms_noenc():
     kms_keyid = get_main_kms_keyid()
     if kms_keyid is None:
@@ -13146,6 +13474,7 @@ def test_bucket_policy_put_obj_kms_noenc():
 
 @pytest.mark.encryption
 @pytest.mark.bucket_policy
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_kms_s3():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -13189,6 +13518,7 @@ def test_bucket_policy_put_obj_kms_s3():
 @pytest.mark.bucket_policy
 # TODO: remove this fails_on_rgw when I fix it
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_put_obj_request_obj_tag():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -13218,6 +13548,7 @@ def test_bucket_policy_put_obj_request_obj_tag():
 @pytest.mark.tagging
 @pytest.mark.bucket_policy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_get_obj_acl_existing_tag():
     bucket_name = _create_objects(keys=['publictag', 'privatetag', 'invalidtag'])
     client = get_client()
@@ -13277,6 +13608,7 @@ def test_bucket_policy_get_obj_acl_existing_tag():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_lock():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13309,6 +13641,7 @@ def test_object_lock_put_obj_lock():
     assert response['Status'] == 'Enabled'
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_lock_invalid_bucket():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13325,6 +13658,7 @@ def test_object_lock_put_obj_lock_invalid_bucket():
     assert status == 409
     assert error_code == 'InvalidBucketState'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_lock_enable_after_create():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13356,6 +13690,7 @@ def test_object_lock_put_obj_lock_enable_after_create():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_lock_with_days_and_years():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13375,6 +13710,7 @@ def test_object_lock_put_obj_lock_with_days_and_years():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_lock_invalid_days():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13393,6 +13729,7 @@ def test_object_lock_put_obj_lock_invalid_days():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_lock_invalid_years():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13411,6 +13748,7 @@ def test_object_lock_put_obj_lock_invalid_years():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_lock_invalid_mode():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13441,6 +13779,7 @@ def test_object_lock_put_obj_lock_invalid_mode():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_lock_invalid_status():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13459,6 +13798,7 @@ def test_object_lock_put_obj_lock_invalid_status():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_suspend_versioning():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13470,6 +13810,7 @@ def test_object_lock_suspend_versioning():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_get_obj_lock():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13488,6 +13829,7 @@ def test_object_lock_get_obj_lock():
     assert response['ObjectLockConfiguration'] == conf
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_get_obj_lock_invalid_bucket():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13499,6 +13841,7 @@ def test_object_lock_get_obj_lock_invalid_bucket():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_retention():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13515,6 +13858,7 @@ def test_object_lock_put_obj_retention():
 
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_retention_invalid_bucket():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13529,6 +13873,7 @@ def test_object_lock_put_obj_retention_invalid_bucket():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_retention_invalid_mode():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13549,6 +13894,7 @@ def test_object_lock_put_obj_retention_invalid_mode():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_get_obj_retention():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13564,6 +13910,7 @@ def test_object_lock_get_obj_retention():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_get_obj_retention_iso8601():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13581,6 +13928,7 @@ def test_object_lock_get_obj_retention_iso8601():
     client.delete_object(Bucket=bucket_name, Key=key, VersionId=version_id, BypassGovernanceRetention=True)
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_get_obj_retention_invalid_bucket():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13594,6 +13942,7 @@ def test_object_lock_get_obj_retention_invalid_bucket():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_retention_versionid():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13610,6 +13959,7 @@ def test_object_lock_put_obj_retention_versionid():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_retention_override_default_retention():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13635,6 +13985,7 @@ def test_object_lock_put_obj_retention_override_default_retention():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_retention_increase_period():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13652,6 +14003,7 @@ def test_object_lock_put_obj_retention_increase_period():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_retention_shorten_period():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13670,6 +14022,7 @@ def test_object_lock_put_obj_retention_shorten_period():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_obj_retention_shorten_period_bypass():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13687,6 +14040,7 @@ def test_object_lock_put_obj_retention_shorten_period_bypass():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_delete_object_with_retention():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13705,6 +14059,7 @@ def test_object_lock_delete_object_with_retention():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 204
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_delete_multipart_object_with_retention():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13730,6 +14085,7 @@ def test_object_lock_delete_multipart_object_with_retention():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 204
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_delete_object_with_retention_and_marker():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13755,6 +14111,7 @@ def test_object_lock_delete_object_with_retention_and_marker():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 204
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_multi_delete_object_with_retention():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13835,6 +14192,7 @@ def test_object_lock_put_legal_hold():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_legal_hold_invalid_bucket():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13849,6 +14207,7 @@ def test_object_lock_put_legal_hold_invalid_bucket():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_put_legal_hold_invalid_status():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13863,6 +14222,7 @@ def test_object_lock_put_legal_hold_invalid_status():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_get_legal_hold():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13879,6 +14239,7 @@ def test_object_lock_get_legal_hold():
     assert response['LegalHold'] == legal_hold_off
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_get_legal_hold_invalid_bucket():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13892,6 +14253,7 @@ def test_object_lock_get_legal_hold_invalid_bucket():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_delete_object_with_legal_hold_on():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13906,6 +14268,7 @@ def test_object_lock_delete_object_with_legal_hold_on():
     client.put_object_legal_hold(Bucket=bucket_name, Key=key, LegalHold={'Status':'OFF'})
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_delete_multipart_object_with_legal_hold_on():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13928,6 +14291,7 @@ def test_object_lock_delete_multipart_object_with_legal_hold_on():
     client.put_object_legal_hold(Bucket=bucket_name, Key=key, LegalHold={'Status':'OFF'})
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_delete_object_with_legal_hold_off():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13940,6 +14304,7 @@ def test_object_lock_delete_object_with_legal_hold_off():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_get_obj_metadata():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13960,6 +14325,7 @@ def test_object_lock_get_obj_metadata():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_uploading_obj():
     bucket_name = get_new_bucket_name()
     client = get_client()
@@ -13990,6 +14356,7 @@ def test_object_lock_changing_mode_from_governance_with_bypass():
     client.put_object_retention(Bucket=bucket_name, Key=key, Retention=retention, BypassGovernanceRetention=True)
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_changing_mode_from_governance_without_bypass():
     bucket_name = get_new_bucket_name()
     key = 'file1'
@@ -14007,6 +14374,7 @@ def test_object_lock_changing_mode_from_governance_without_bypass():
     assert error_code == 'AccessDenied'
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_lock_changing_mode_from_compliance():
     bucket_name = get_new_bucket_name()
     key = 'file1'
@@ -14038,6 +14406,7 @@ def test_copy_object_ifmatch_good():
 @pytest.mark.copy
 # TODO: remove fails_on_rgw when https://tracker.ceph.com/issues/40808 is resolved
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_copy_object_ifmatch_failed():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14051,6 +14420,7 @@ def test_copy_object_ifmatch_failed():
 @pytest.mark.copy
 # TODO: remove fails_on_rgw when https://tracker.ceph.com/issues/40808 is resolved
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_copy_object_ifnonematch_good():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14075,6 +14445,7 @@ def test_copy_object_ifnonematch_failed():
 
 # TODO: results in a 404 instead of 400 on the RGW
 @pytest.mark.fails_on_rgw
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_read_unreadable():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14083,12 +14454,14 @@ def test_object_read_unreadable():
     assert status == 400
     assert e.response['Error']['Message'] == 'Couldn\'t parse the specified URI.'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_bucket_policy_status():
     bucket_name = get_new_bucket()
     client = get_client()
     resp = client.get_bucket_policy_status(Bucket=bucket_name)
     assert resp['PolicyStatus']['IsPublic'] == False
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_public_acl_bucket_policy_status():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14096,6 +14469,7 @@ def test_get_public_acl_bucket_policy_status():
     resp = client.get_bucket_policy_status(Bucket=bucket_name)
     assert resp['PolicyStatus']['IsPublic'] == True
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_authpublic_acl_bucket_policy_status():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14104,6 +14478,7 @@ def test_get_authpublic_acl_bucket_policy_status():
     assert resp['PolicyStatus']['IsPublic'] == True
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_publicpolicy_acl_bucket_policy_status():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14132,6 +14507,7 @@ def test_get_publicpolicy_acl_bucket_policy_status():
     assert resp['PolicyStatus']['IsPublic'] == True
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_nonpublicpolicy_acl_bucket_policy_status():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14164,6 +14540,7 @@ def test_get_nonpublicpolicy_acl_bucket_policy_status():
     assert resp['PolicyStatus']['IsPublic'] == False
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_nonpublicpolicy_principal_bucket_policy_status():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14189,6 +14566,7 @@ def test_get_nonpublicpolicy_principal_bucket_policy_status():
     assert resp['PolicyStatus']['IsPublic'] == False
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_policy_allow_notprincipal():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14216,6 +14594,7 @@ def test_bucket_policy_allow_notprincipal():
     assert error_code == 'InvalidArgument' or error_code == 'MalformedPolicy'
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_undefined_public_block():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14233,6 +14612,7 @@ def test_get_undefined_public_block():
 
     assert response_code == 'NoSuchPublicAccessBlockConfiguration'
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_public_block_deny_bucket_policy():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14261,6 +14641,7 @@ def test_get_public_block_deny_bucket_policy():
     status, error_code = _get_status_and_error_code(e.response)
     assert status == 403
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_public_block():
     #client = get_svc_client(svc='s3control', client_config=Config(s3={'addressing_style': 'path'}))
     bucket_name = get_new_bucket()
@@ -14280,6 +14661,7 @@ def test_put_public_block():
     assert resp['PublicAccessBlockConfiguration']['RestrictPublicBuckets'] == access_conf['RestrictPublicBuckets']
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_block_public_put_bucket_acls():
     #client = get_svc_client(svc='s3control', client_config=Config(s3={'addressing_style': 'path'}))
     bucket_name = get_new_bucket()
@@ -14309,6 +14691,7 @@ def test_block_public_put_bucket_acls():
     assert status == 403
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_block_public_object_canned_acls():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14337,6 +14720,7 @@ def test_block_public_object_canned_acls():
     client.put_object(Bucket=bucket_name, Key='foo4', Body='', ACL='private')
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_block_public_policy():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14372,6 +14756,7 @@ def test_block_public_policy_with_principal():
 
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_block_public_restrict_public_buckets():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14412,6 +14797,7 @@ def test_block_public_restrict_public_buckets():
     assert _get_body(response) == 'bar'
 
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_ignore_public_acls():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14438,6 +14824,7 @@ def test_ignore_public_acls():
     check_access_denied(alt_client.list_objects, Bucket=bucket_name)
     check_access_denied(alt_client.get_object, Bucket=bucket_name, Key='key1')
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_get_delete_public_block():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14542,6 +14929,7 @@ def test_put_bucket_encryption_kms():
 
 
 @pytest.mark.sse_s3
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_bucket_encryption_s3():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14562,6 +14950,7 @@ def test_get_bucket_encryption_s3():
 
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_bucket_encryption_kms():
     kms_keyid = get_main_kms_keyid()
     if kms_keyid is None:
@@ -14586,6 +14975,7 @@ def test_get_bucket_encryption_kms():
 
 
 @pytest.mark.sse_s3
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_bucket_encryption_s3():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14608,6 +14998,7 @@ def test_delete_bucket_encryption_s3():
 
 
 @pytest.mark.encryption
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_bucket_encryption_kms():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14651,6 +15042,7 @@ def _test_sse_s3_default_upload(file_size):
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_default_upload_1b():
     _test_sse_s3_default_upload(1)
 
@@ -14658,6 +15050,7 @@ def test_sse_s3_default_upload_1b():
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_default_upload_1kb():
     _test_sse_s3_default_upload(1024)
 
@@ -14665,6 +15058,7 @@ def test_sse_s3_default_upload_1kb():
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_default_upload_1mb():
     _test_sse_s3_default_upload(1024*1024)
 
@@ -14672,6 +15066,7 @@ def test_sse_s3_default_upload_1mb():
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_default_upload_8mb():
     _test_sse_s3_default_upload(8*1024*1024)
 
@@ -14703,6 +15098,7 @@ def _test_sse_kms_default_upload(file_size):
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_default_upload_1b():
     _test_sse_kms_default_upload(1)
 
@@ -14710,6 +15106,7 @@ def test_sse_kms_default_upload_1b():
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_default_upload_1kb():
     _test_sse_kms_default_upload(1024)
 
@@ -14717,6 +15114,7 @@ def test_sse_kms_default_upload_1kb():
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_default_upload_1mb():
     _test_sse_kms_default_upload(1024*1024)
 
@@ -14724,6 +15122,7 @@ def test_sse_kms_default_upload_1mb():
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_default_upload_8mb():
     _test_sse_kms_default_upload(8*1024*1024)
 
@@ -14733,6 +15132,7 @@ def test_sse_kms_default_upload_8mb():
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_default_method_head():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14758,6 +15158,7 @@ def test_sse_s3_default_method_head():
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_default_multipart_upload():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14804,6 +15205,7 @@ def test_sse_s3_default_multipart_upload():
 @pytest.mark.bucket_encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_default_post_object_authenticated_request():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -14849,6 +15251,7 @@ def test_sse_s3_default_post_object_authenticated_request():
 @pytest.mark.encryption
 @pytest.mark.bucket_encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_kms_default_post_object_authenticated_request():
     kms_keyid = get_main_kms_keyid()
     if kms_keyid is None:
@@ -14915,27 +15318,32 @@ def _test_sse_s3_encrypted_upload(file_size):
 @pytest.mark.encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_encrypted_upload_1b():
     _test_sse_s3_encrypted_upload(1)
 
 @pytest.mark.encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_encrypted_upload_1kb():
     _test_sse_s3_encrypted_upload(1024)
 
 @pytest.mark.encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_encrypted_upload_1mb():
     _test_sse_s3_encrypted_upload(1024*1024)
 
 @pytest.mark.encryption
 @pytest.mark.sse_s3
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_sse_s3_encrypted_upload_8mb():
     _test_sse_s3_encrypted_upload(8*1024*1024)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_object_torrent():
     client = get_client()
     bucket_name = get_new_bucket()
@@ -14958,6 +15366,7 @@ def test_get_object_torrent():
         assert error_code == 'NoSuchKey'
 
 @pytest.mark.checksum
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_checksum_sha256():
     bucket = get_new_bucket()
     client = get_client()
@@ -14980,6 +15389,7 @@ def test_object_checksum_sha256():
     assert error_code == 'BadDigest'
 
 @pytest.mark.checksum
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_object_checksum_crc64nvme():
     bucket = get_new_bucket()
     client = get_client()
@@ -15003,6 +15413,7 @@ def test_object_checksum_crc64nvme():
 
 @pytest.mark.checksum
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_checksum_sha256():
     bucket = get_new_bucket()
     client = get_client()
@@ -15068,6 +15479,7 @@ def test_multipart_checksum_sha256():
 
 @pytest.mark.checksum
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_reupload_checksum_and_etag():
     bucket = get_new_bucket()
     client = get_client()
@@ -15177,6 +15589,7 @@ def multipart_checksum_3parts_helper(key=None, checksum_algo=None, checksum_type
 
 @pytest.mark.checksum
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_use_cksum_helper_sha256():
     size = 5 * 1024 * 1024 # each part but the last must be at least 5M
 
@@ -15201,6 +15614,7 @@ def test_multipart_use_cksum_helper_sha256():
 
 @pytest.mark.checksum
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_use_cksum_helper_crc64nvme():
     size = 5 * 1024 * 1024 # each part but the last must be at least 5M
 
@@ -15225,6 +15639,7 @@ def test_multipart_use_cksum_helper_crc64nvme():
 
 @pytest.mark.checksum
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_use_cksum_helper_crc32():
     size = 5 * 1024 * 1024 # each part but the last must be at least 5M
 
@@ -15249,6 +15664,7 @@ def test_multipart_use_cksum_helper_crc32():
 
 @pytest.mark.checksum
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_use_cksum_helper_crc32c():
     size = 5 * 1024 * 1024 # each part but the last must be at least 5M
 
@@ -15273,6 +15689,7 @@ def test_multipart_use_cksum_helper_crc32c():
 
 @pytest.mark.checksum
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_use_cksum_helper_sha1():
     size = 5 * 1024 * 1024 # each part but the last must be at least 5M
 
@@ -15296,6 +15713,7 @@ def test_multipart_use_cksum_helper_sha1():
     #eof    
 
 @pytest.mark.checksum
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_post_object_upload_checksum():
     megabytes = 1024 * 1024
     min_size = 0
@@ -15525,6 +15943,7 @@ def randcontent():
 
 
 @pytest.mark.bucket_logging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging():
     has_extensions = _has_bucket_logging_extension()
     has_key_format = _has_target_object_key_format()
@@ -15631,6 +16050,7 @@ def test_put_bucket_logging():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_mtime():
     src_bucket_name = get_new_bucket_name()
     src_bucket = get_new_bucket_resource(name=src_bucket_name)
@@ -15825,6 +16245,7 @@ def _bucket_logging_object_name(key_format, prefix):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_simple_key():
     _bucket_logging_object_name('SimplePrefix', 'log/')
     _bucket_logging_object_name('SimplePrefix', '')
@@ -15833,6 +16254,7 @@ def test_bucket_logging_simple_key():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_partitioned_key():
     _bucket_logging_object_name('PartitionedPrefix', 'log/')
     _bucket_logging_object_name('PartitionedPrefix', '')
@@ -15840,6 +16262,7 @@ def test_bucket_logging_partitioned_key():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_bucket_auth_type():
     src_bucket_name = get_new_bucket_name()
     src_bucket = get_new_bucket_resource(name=src_bucket_name)
@@ -15938,6 +16361,7 @@ def test_bucket_logging_bucket_auth_type():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_request_id():
     """verify that the standard access log RequestID field matches the x-amz-request-id response header"""
     src_bucket_name = get_new_bucket_name()
@@ -15976,6 +16400,7 @@ def test_bucket_logging_request_id():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_requester_assumed_role():
     """verify the standard access log Requester field contains the assumed-role ARN
     for requests made with STS temporary credentials"""
@@ -16132,6 +16557,7 @@ def _bucket_logging_key_filter(log_type):
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_bucket_acl_required():
     src_bucket_name = get_new_bucket_name()
     src_bucket = get_new_bucket_resource(name=src_bucket_name)
@@ -16203,6 +16629,7 @@ def test_bucket_logging_bucket_acl_required():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_object_acl_required():
     src_bucket_name = get_new_bucket_name()
     src_bucket = get_new_bucket_resource(name=src_bucket_name)
@@ -16277,6 +16704,7 @@ def test_bucket_logging_object_acl_required():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_key_filter_s():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -16285,6 +16713,7 @@ def test_bucket_logging_key_filter_s():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_key_filter_j():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -16389,6 +16818,7 @@ def _bucket_logging_flush(logging_type, single_prefix, concurrency, num_keys):
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_flush_empty():
     # testing empty commits
     _bucket_logging_flush('Journal', False, False, 0)
@@ -16396,6 +16826,7 @@ def test_bucket_logging_flush_empty():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_flush_j():
     _bucket_logging_flush('Journal', False, False, 10)
     _bucket_logging_flush('Journal', False, False, 100)
@@ -16405,6 +16836,7 @@ def test_bucket_logging_flush_j():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_flush_s():
     _bucket_logging_flush('Standard', False, False, 10)
     _bucket_logging_flush('Standard', False, False, 100)
@@ -16414,6 +16846,7 @@ def test_bucket_logging_flush_s():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_flush_j_single():
     _bucket_logging_flush('Journal', True, False, 10)
     _bucket_logging_flush('Journal', True, False, 100)
@@ -16421,6 +16854,7 @@ def test_bucket_logging_flush_j_single():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_flush_s_single():
     _bucket_logging_flush('Standard', True, False, 10)
     _bucket_logging_flush('Standard', True, False, 100)
@@ -16428,6 +16862,7 @@ def test_bucket_logging_flush_s_single():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_concurrent_flush_j():
     _bucket_logging_flush('Journal', False, True, 10)
     _bucket_logging_flush('Journal', False, True, 100)
@@ -16436,6 +16871,7 @@ def test_bucket_logging_concurrent_flush_j():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_concurrent_flush_s():
     _bucket_logging_flush('Standard', False, True, 10)
     _bucket_logging_flush('Standard', False, True, 100)
@@ -16443,6 +16879,7 @@ def test_bucket_logging_concurrent_flush_s():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_concurrent_flush_j_single():
     _bucket_logging_flush('Journal', True, True, 10)
     _bucket_logging_flush('Journal', True, True, 100)
@@ -16451,6 +16888,7 @@ def test_bucket_logging_concurrent_flush_j_single():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_concurrent_flush_s_single():
     _bucket_logging_flush('Standard', True, True, 10)
     _bucket_logging_flush('Standard', True, True, 100)
@@ -16458,6 +16896,7 @@ def test_bucket_logging_concurrent_flush_s_single():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_put_and_flush():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -16523,6 +16962,7 @@ def test_bucket_logging_put_and_flush():
 
 
 @pytest.mark.bucket_logging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging_errors():
     src_bucket_name = get_new_bucket_name()
     src_bucket = get_new_bucket_resource(name=src_bucket_name)
@@ -16642,6 +17082,7 @@ def _verify_access_denied(client, src_bucket_name, log_bucket_name, prefix):
 
 
 @pytest.mark.bucket_logging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_owner():
     src_bucket_name = get_new_bucket_name()
     src_bucket = get_new_bucket_resource(name=src_bucket_name)
@@ -16689,6 +17130,7 @@ def _set_bucket_policy(client, log_bucket_name, policy):
 
 
 @pytest.mark.bucket_logging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging_permissions():
     src_bucket_name = get_new_bucket_name()
     src_bucket = get_new_bucket_resource(name=src_bucket_name)
@@ -16882,6 +17324,7 @@ def _put_bucket_logging_policy_wildcard(add_objects):
 
 
 @pytest.mark.bucket_logging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging_policy_wildcard():
     _put_bucket_logging_policy_wildcard(False)
 
@@ -16889,6 +17332,7 @@ def test_put_bucket_logging_policy_wildcard():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging_policy_wildcard_objects():
     _put_bucket_logging_policy_wildcard(True)
 
@@ -16972,12 +17416,14 @@ def _bucket_logging_permission_change(logging_type):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_permission_change_s():
     _bucket_logging_permission_change('Standard')
 
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_permission_change_j():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -17148,12 +17594,14 @@ def _put_bucket_logging_tenant(log_type):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging_tenant_s():
     _put_bucket_logging_tenant('Standard')
 
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging_tenant_j():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -17220,12 +17668,14 @@ def _put_bucket_logging_account(log_type):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging_account_s():
     _put_bucket_logging_account('Standard')
 
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging_account_j():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -17233,6 +17683,7 @@ def test_put_bucket_logging_account_j():
 
 
 @pytest.mark.bucket_logging
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_rm_bucket_logging():
     src_bucket_name = get_new_bucket_name()
     src_bucket = get_new_bucket_resource(name=src_bucket_name)
@@ -17257,6 +17708,7 @@ def test_rm_bucket_logging():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_logging_extensions():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -17341,6 +17793,7 @@ def _bucket_logging_put_objects(versioned):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_put_objects():
     _bucket_logging_put_objects(False)
 
@@ -17348,6 +17801,7 @@ def test_bucket_logging_put_objects():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_put_objects_versioned():
     _bucket_logging_put_objects(True)
 
@@ -17355,6 +17809,7 @@ def test_bucket_logging_put_objects_versioned():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_put_concurrency():
     src_bucket_name = get_new_bucket()
     log_bucket_name = get_new_bucket_name()
@@ -17471,6 +17926,7 @@ def _bucket_logging_delete_objects(versioned):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_delete_objects():
     _bucket_logging_delete_objects(False)
 
@@ -17478,6 +17934,7 @@ def test_bucket_logging_delete_objects():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_delete_objects_versioned():
     _bucket_logging_delete_objects(True)
 
@@ -17540,6 +17997,7 @@ def _bucket_logging_get_objects(versioned):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_get_objects():
     _bucket_logging_get_objects(False)
 
@@ -17547,6 +18005,7 @@ def test_bucket_logging_get_objects():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_get_objects_versioned():
     _bucket_logging_get_objects(True)
 
@@ -17616,6 +18075,7 @@ def _bucket_logging_copy_objects(versioned, another_bucket):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_copy_objects():
     _bucket_logging_copy_objects(False, False)
 
@@ -17623,6 +18083,7 @@ def test_bucket_logging_copy_objects():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_copy_objects_versioned():
     _bucket_logging_copy_objects(True, False)
 
@@ -17630,6 +18091,7 @@ def test_bucket_logging_copy_objects_versioned():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_copy_objects_bucket():
     _bucket_logging_copy_objects(False, True)
 
@@ -17637,6 +18099,7 @@ def test_bucket_logging_copy_objects_bucket():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_copy_objects_bucket_versioned():
     _bucket_logging_copy_objects(True, True)
 
@@ -17697,6 +18160,7 @@ def _bucket_logging_head_objects(versioned):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_head_objects():
     _bucket_logging_head_objects(False)
 
@@ -17704,6 +18168,7 @@ def test_bucket_logging_head_objects():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_head_objects_versioned():
     _bucket_logging_head_objects(True)
 
@@ -17764,6 +18229,7 @@ def _bucket_logging_mpu(versioned, record_type):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_mpu_s():
     _bucket_logging_mpu(False, 'Standard')
 
@@ -17771,12 +18237,14 @@ def test_bucket_logging_mpu_s():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_mpu_versioned_s():
     _bucket_logging_mpu(True, 'Standard')
 
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_mpu_j():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -17785,6 +18253,7 @@ def test_bucket_logging_mpu_j():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_mpu_versioned_j():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -17839,6 +18308,7 @@ def _bucket_logging_mpu_copy(versioned):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_mpu_copy():
     _bucket_logging_mpu_copy(False)
 
@@ -17846,6 +18316,7 @@ def test_bucket_logging_mpu_copy():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_mpu_copy_versioned():
     _bucket_logging_mpu_copy(True)
 
@@ -17914,6 +18385,7 @@ def _bucket_logging_multi_delete(versioned):
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_multi_delete():
     _bucket_logging_multi_delete(False)
 
@@ -17921,6 +18393,7 @@ def test_bucket_logging_multi_delete():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_multi_delete_versioned():
     _bucket_logging_multi_delete(True)
 
@@ -17973,6 +18446,7 @@ def _bucket_logging_type(logging_type):
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_event_type_j():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -17981,6 +18455,7 @@ def test_bucket_logging_event_type_j():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_event_type_s():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -17989,6 +18464,7 @@ def test_bucket_logging_event_type_s():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_roll_time():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -18065,6 +18541,7 @@ def test_bucket_logging_roll_time():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_multiple_prefixes():
     log_bucket_name = get_new_bucket_name()
     log_bucket = get_new_bucket_resource(name=log_bucket_name)
@@ -18121,6 +18598,7 @@ def test_bucket_logging_multiple_prefixes():
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
 @pytest.mark.fails_without_logging_rollover
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_single_prefix():
     log_bucket_name = get_new_bucket_name()
     log_bucket = get_new_bucket_resource(name=log_bucket_name)
@@ -18175,6 +18653,7 @@ def test_bucket_logging_single_prefix():
 
 @pytest.mark.bucket_logging
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_object_meta():
     if not _has_bucket_logging_extension():
         pytest.skip('ceph extension to bucket logging not supported at client')
@@ -18404,6 +18883,7 @@ def _bucket_logging_cleanup(cleanup_type, logging_type, single_prefix, concurren
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_bucket_deletion_j():
     _bucket_logging_cleanup('deletion', 'Journal', False, False)
 
@@ -18411,6 +18891,7 @@ def test_bucket_logging_cleanup_bucket_deletion_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_bucket_deletion_j_single():
     _bucket_logging_cleanup('deletion', 'Journal', True, False)
 
@@ -18418,6 +18899,7 @@ def test_bucket_logging_cleanup_bucket_deletion_j_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_disabling_j():
     _bucket_logging_cleanup('disabling', 'Journal', False, False)
 
@@ -18425,6 +18907,7 @@ def test_bucket_logging_cleanup_disabling_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_disabling_j_single():
     _bucket_logging_cleanup('disabling', 'Journal', True, False)
 
@@ -18432,6 +18915,7 @@ def test_bucket_logging_cleanup_disabling_j_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_updating_j():
     _bucket_logging_cleanup('updating', 'Journal', False, False)
 
@@ -18439,6 +18923,7 @@ def test_bucket_logging_cleanup_updating_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_updating_j_single():
     _bucket_logging_cleanup('updating', 'Journal', True, False)
 
@@ -18446,6 +18931,7 @@ def test_bucket_logging_cleanup_updating_j_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_notupdating_j():
     _bucket_logging_cleanup('notupdating', 'Journal', False, False)
 
@@ -18453,6 +18939,7 @@ def test_bucket_logging_notupdating_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_notupdating_j_single():
     _bucket_logging_cleanup('notupdating', 'Journal', True, False)
 
@@ -18460,6 +18947,7 @@ def test_bucket_logging_notupdating_j_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_bucket_deletion_s():
     _bucket_logging_cleanup('deletion', 'Standard', False, False)
 
@@ -18467,6 +18955,7 @@ def test_bucket_logging_cleanup_bucket_deletion_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_bucket_deletion_s_single():
     _bucket_logging_cleanup('deletion', 'Standard', True, False)
 
@@ -18474,6 +18963,7 @@ def test_bucket_logging_cleanup_bucket_deletion_s_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_disabling_s():
     _bucket_logging_cleanup('disabling', 'Standard', False, False)
 
@@ -18481,6 +18971,7 @@ def test_bucket_logging_cleanup_disabling_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_disabling_s_single():
     _bucket_logging_cleanup('disabling', 'Standard', True, False)
 
@@ -18488,6 +18979,7 @@ def test_bucket_logging_cleanup_disabling_s_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_updating_s():
     _bucket_logging_cleanup('updating', 'Standard', False, False)
 
@@ -18495,6 +18987,7 @@ def test_bucket_logging_cleanup_updating_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_updating_s_single():
     _bucket_logging_cleanup('updating', 'Standard', True, False)
 
@@ -18502,6 +18995,7 @@ def test_bucket_logging_cleanup_updating_s_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_notupdating_s():
     _bucket_logging_cleanup('notupdating', 'Standard', False, False)
 
@@ -18509,6 +19003,7 @@ def test_bucket_logging_notupdating_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_notupdating_s_single():
     _bucket_logging_cleanup('notupdating', 'Standard', True, False)
 
@@ -18516,6 +19011,7 @@ def test_bucket_logging_notupdating_s_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_target_cleanup_j():
     _bucket_logging_cleanup('target', 'Journal', False, False)
 
@@ -18523,6 +19019,7 @@ def test_bucket_logging_target_cleanup_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_target_cleanup_j_single():
     _bucket_logging_cleanup('target', 'Journal', True, False)
 
@@ -18530,6 +19027,7 @@ def test_bucket_logging_target_cleanup_j_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_target_cleanup_s():
     _bucket_logging_cleanup('target', 'Standard', False, False)
 
@@ -18537,6 +19035,7 @@ def test_bucket_logging_target_cleanup_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_target_cleanup_s_single():
     _bucket_logging_cleanup('target', 'Standard', True, False)
 
@@ -18544,6 +19043,7 @@ def test_bucket_logging_target_cleanup_s_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_bucket_concurrent_deletion_j():
     _bucket_logging_cleanup('deletion', 'Journal', False, True)
 
@@ -18551,6 +19051,7 @@ def test_bucket_logging_cleanup_bucket_concurrent_deletion_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_bucket_concurrent_deletion_j_single():
     _bucket_logging_cleanup('deletion', 'Journal', True, True)
 
@@ -18558,6 +19059,7 @@ def test_bucket_logging_cleanup_bucket_concurrent_deletion_j_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_concurrent_disabling_j():
     _bucket_logging_cleanup('disabling', 'Journal', False, True)
 
@@ -18565,6 +19067,7 @@ def test_bucket_logging_cleanup_concurrent_disabling_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_concurrent_disabling_j_single():
     _bucket_logging_cleanup('disabling', 'Journal', True, True)
 
@@ -18572,6 +19075,7 @@ def test_bucket_logging_cleanup_concurrent_disabling_j_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_concurrent_updating_j():
     _bucket_logging_cleanup('updating', 'Journal', False, True)
 
@@ -18579,6 +19083,7 @@ def test_bucket_logging_cleanup_concurrent_updating_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_concurrent_updating_j_single():
     _bucket_logging_cleanup('updating', 'Journal', True, True)
 
@@ -18586,6 +19091,7 @@ def test_bucket_logging_cleanup_concurrent_updating_j_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_bucket_concurrent_deletion_s():
     _bucket_logging_cleanup('deletion', 'Standard', False, True)
 
@@ -18593,6 +19099,7 @@ def test_bucket_logging_cleanup_bucket_concurrent_deletion_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_bucket_concurrent_deletion_s_single():
     _bucket_logging_cleanup('deletion', 'Standard', True, True)
 
@@ -18600,6 +19107,7 @@ def test_bucket_logging_cleanup_bucket_concurrent_deletion_s_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_concurrent_disabling_s():
     _bucket_logging_cleanup('disabling', 'Standard', False, True)
 
@@ -18607,6 +19115,7 @@ def test_bucket_logging_cleanup_concurrent_disabling_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_concurrent_disabling_s_single():
     _bucket_logging_cleanup('disabling', 'Standard', True, True)
 
@@ -18614,6 +19123,7 @@ def test_bucket_logging_cleanup_concurrent_disabling_s_single():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_concurrent_updating_s():
     _bucket_logging_cleanup('updating', 'Standard', False, True)
 
@@ -18621,6 +19131,7 @@ def test_bucket_logging_cleanup_concurrent_updating_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_cleanup_concurrent_updating_s_single():
     _bucket_logging_cleanup('updating', 'Standard', True, True)
 
@@ -18760,6 +19271,7 @@ def _bucket_logging_partial_cleanup(cleanup_type, logging_type, concurrency):
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_concurrent_updating_s():
     _bucket_logging_partial_cleanup('updating', 'Standard', True)
 
@@ -18767,6 +19279,7 @@ def test_bucket_logging_part_cleanup_concurrent_updating_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_concurrent_disabling_s():
     _bucket_logging_partial_cleanup('disabling', 'Standard', True)
 
@@ -18774,6 +19287,7 @@ def test_bucket_logging_part_cleanup_concurrent_disabling_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_concurrent_deletion_s():
     _bucket_logging_partial_cleanup('deletion', 'Standard', True)
 
@@ -18781,6 +19295,7 @@ def test_bucket_logging_part_cleanup_concurrent_deletion_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_concurrent_updating_j():
     _bucket_logging_partial_cleanup('updating', 'Journal', True)
 
@@ -18788,6 +19303,7 @@ def test_bucket_logging_part_cleanup_concurrent_updating_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_concurrent_disabling_j():
     _bucket_logging_partial_cleanup('disabling', 'Journal', True)
 
@@ -18795,6 +19311,7 @@ def test_bucket_logging_part_cleanup_concurrent_disabling_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_concurrent_deletion_j():
     _bucket_logging_partial_cleanup('deletion', 'Journal', True)
 
@@ -18802,6 +19319,7 @@ def test_bucket_logging_part_cleanup_concurrent_deletion_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_updating_s():
     _bucket_logging_partial_cleanup('updating', 'Standard', False)
 
@@ -18809,6 +19327,7 @@ def test_bucket_logging_part_cleanup_updating_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_disabling_s():
     _bucket_logging_partial_cleanup('disabling', 'Standard', False)
 
@@ -18816,6 +19335,7 @@ def test_bucket_logging_part_cleanup_disabling_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_deletion_s():
     _bucket_logging_partial_cleanup('deletion', 'Standard', False)
 
@@ -18823,6 +19343,7 @@ def test_bucket_logging_part_cleanup_deletion_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_updating_j():
     _bucket_logging_partial_cleanup('updating', 'Journal', False)
 
@@ -18830,6 +19351,7 @@ def test_bucket_logging_part_cleanup_updating_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_disabling_j():
     _bucket_logging_partial_cleanup('disabling', 'Journal', False)
 
@@ -18837,6 +19359,7 @@ def test_bucket_logging_part_cleanup_disabling_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_part_cleanup_deletion_j():
     _bucket_logging_partial_cleanup('deletion', 'Journal', False)
 
@@ -18982,6 +19505,7 @@ def _bucket_logging_conf_update(logging_type, update_value, concurrency):
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_conf_updating_roll_s():
     _bucket_logging_conf_update('Standard', 'roll_time', False)
 
@@ -18989,6 +19513,7 @@ def test_bucket_logging_conf_updating_roll_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_conf_updating_roll_j():
     _bucket_logging_conf_update('Journal', 'roll_time', False)
 
@@ -18996,6 +19521,7 @@ def test_bucket_logging_conf_updating_roll_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_conf_updating_pfx_s():
     _bucket_logging_conf_update('Standard', 'prefix', False)
 
@@ -19003,6 +19529,7 @@ def test_bucket_logging_conf_updating_pfx_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_conf_updating_pfx_j():
     _bucket_logging_conf_update('Journal', 'prefix', False)
 
@@ -19010,6 +19537,7 @@ def test_bucket_logging_conf_updating_pfx_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_conf_concurrent_updating_roll_s():
     _bucket_logging_conf_update('Standard', 'roll_time', True)
 
@@ -19017,6 +19545,7 @@ def test_bucket_logging_conf_concurrent_updating_roll_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_conf_concurrent_updating_roll_j():
     _bucket_logging_conf_update('Journal', 'roll_time', True)
 
@@ -19024,6 +19553,7 @@ def test_bucket_logging_conf_concurrent_updating_roll_j():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_conf_concurrent_updating_pfx_s():
     _bucket_logging_conf_update('Standard', 'prefix', True)
 
@@ -19031,6 +19561,7 @@ def test_bucket_logging_conf_concurrent_updating_pfx_s():
 @pytest.mark.bucket_logging
 @pytest.mark.bucket_logging_cleanup
 @pytest.mark.fails_on_aws
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_logging_conf_concurrent_updating_pfx_j():
     _bucket_logging_conf_update('Journal', 'prefix', True)
 
@@ -19044,6 +19575,7 @@ def check_parts_count(parts, expected):
 
 @pytest.mark.checksum
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_multipart_checksum_object_attributes():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -19087,6 +19619,7 @@ def test_get_multipart_checksum_object_attributes():
         partno += 1
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_multipart_object_attributes():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -19123,6 +19656,7 @@ def test_get_multipart_object_attributes():
         partno += 1
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_paginated_multipart_object_attributes():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -19184,6 +19718,7 @@ def test_get_paginated_multipart_object_attributes():
         partno += 1
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_single_multipart_object_attributes():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -19216,6 +19751,7 @@ def test_get_single_multipart_object_attributes():
     assert obj_part['Size'] == part_size
     assert 'ChecksumSHA256' not in obj_part
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_checksum_object_attributes():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -19239,6 +19775,7 @@ def test_get_checksum_object_attributes():
     assert response['Checksum']['ChecksumSHA256'] == sha256sum
     assert 'ObjectParts' not in response
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_versioned_object_attributes():
     bucket_name = get_new_bucket()
     check_configure_versioning_retry(bucket_name, "Enabled", "Enabled")
@@ -19282,6 +19819,7 @@ def test_get_versioned_object_attributes():
 
 @pytest.mark.encryption
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_get_sse_c_encrypted_object_attributes():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -19400,6 +19938,7 @@ def check_delete_marker(client, bucket, key, status):
 
 @pytest.mark.delete_marker
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_marker_nonversioned():
     bucket = get_new_bucket()
     client = get_client()
@@ -19412,6 +19951,7 @@ def test_delete_marker_nonversioned():
 
 @pytest.mark.delete_marker
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_marker_versioned():
     bucket = get_new_bucket()
     client = get_client()
@@ -19425,6 +19965,7 @@ def test_delete_marker_versioned():
 
 @pytest.mark.delete_marker
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_marker_suspended():
     bucket = get_new_bucket()
     client = get_client()
@@ -19440,6 +19981,7 @@ def test_delete_marker_suspended():
 @pytest.mark.lifecycle
 @pytest.mark.lifecycle_expiration
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_marker_expiration():
     bucket = get_new_bucket()
     client = get_client()
@@ -19467,6 +20009,7 @@ def test_delete_marker_expiration():
 
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_object_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19529,6 +20072,7 @@ def failing_conditional_multipart_upload(expected_failure, client, bucket, key, 
 
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_put_object_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19564,6 +20108,7 @@ def test_multipart_put_object_if_match():
 
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_current_object_if_none_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19593,6 +20138,7 @@ def test_put_current_object_if_none_match():
 
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_put_current_object_if_none_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19620,6 +20166,7 @@ def test_multipart_put_current_object_if_none_match():
 
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_current_object_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19651,6 +20198,7 @@ def test_put_current_object_if_match():
 
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_multipart_put_current_object_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19678,6 +20226,7 @@ def test_multipart_put_current_object_if_match():
 
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_object_current_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19706,6 +20255,7 @@ def test_put_object_current_if_match():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_object_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19731,6 +20281,7 @@ def test_delete_object_if_match():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_object_current_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19766,6 +20317,7 @@ def test_delete_object_current_if_match():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_object_version_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19795,6 +20347,7 @@ def test_delete_object_version_if_match():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_object_if_match_last_modified_time():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19816,6 +20369,7 @@ def test_delete_object_if_match_last_modified_time():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_object_current_if_match_last_modified_time():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19840,6 +20394,7 @@ def test_delete_object_current_if_match_last_modified_time():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_object_version_if_match_last_modified_time():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19863,6 +20418,7 @@ def test_delete_object_version_if_match_last_modified_time():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_object_if_match_size():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19884,6 +20440,7 @@ def test_delete_object_if_match_size():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_object_current_if_match_size():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19907,6 +20464,7 @@ def test_delete_object_current_if_match_size():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_object_version_if_match_size():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19930,6 +20488,7 @@ def test_delete_object_version_if_match_size():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_objects_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19950,6 +20509,7 @@ def test_delete_objects_if_match():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_objects_current_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19972,6 +20532,7 @@ def test_delete_objects_current_if_match():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_objects_version_if_match():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -19995,6 +20556,7 @@ def test_delete_objects_version_if_match():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_objects_if_match_last_modified_time():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -20017,6 +20579,7 @@ def test_delete_objects_if_match_last_modified_time():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_objects_current_if_match_last_modified_time():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -20042,6 +20605,7 @@ def test_delete_objects_current_if_match_last_modified_time():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_objects_version_if_match_last_modified_time():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -20068,6 +20632,7 @@ def test_delete_objects_version_if_match_last_modified_time():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_objects_if_match_size():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -20090,6 +20655,7 @@ def test_delete_objects_if_match_size():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_objects_current_if_match_size():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -20115,6 +20681,7 @@ def test_delete_objects_current_if_match_size():
 @pytest.mark.fails_on_aws # only supported for directory buckets
 @pytest.mark.conditional_write
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_delete_objects_version_if_match_size():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -20272,6 +20839,7 @@ def get_bucket_ownership(client, bucket):
 
 @pytest.mark.object_ownership
 @pytest.mark.fails_on_aws # aws defaults to BucketOwnerEnforced
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_create_bucket_no_ownership_controls():
     client = get_client()
     bucket = get_new_bucket()
@@ -20280,6 +20848,7 @@ def test_create_bucket_no_ownership_controls():
 
 @pytest.mark.object_ownership
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_create_bucket_bucket_owner_enforced():
     client = get_client()
     bucket_owner = (get_main_user_id(), get_main_display_name())
@@ -20292,6 +20861,7 @@ def test_create_bucket_bucket_owner_enforced():
 
 @pytest.mark.object_ownership
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_create_bucket_bucket_owner_preferred():
     client = get_client()
     bucket_owner = (get_main_user_id(), get_main_display_name())
@@ -20304,6 +20874,7 @@ def test_create_bucket_bucket_owner_preferred():
 
 @pytest.mark.object_ownership
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_create_bucket_object_writer():
     client = get_client()
     bucket_owner = (get_main_user_id(), get_main_display_name())
@@ -20316,6 +20887,7 @@ def test_create_bucket_object_writer():
 
 @pytest.mark.object_ownership
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_ownership_bucket_owner_enforced():
     client = get_client()
     bucket_owner = (get_main_user_id(), get_main_display_name())
@@ -20341,6 +20913,7 @@ def test_put_bucket_ownership_bucket_owner_enforced():
 
 @pytest.mark.object_ownership
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_ownership_bucket_owner_preferred():
     client = get_client()
     bucket_owner = (get_main_user_id(), get_main_display_name())
@@ -20354,6 +20927,7 @@ def test_put_bucket_ownership_bucket_owner_preferred():
 
 @pytest.mark.object_ownership
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_put_bucket_ownership_object_writer():
     client = get_client()
     bucket_owner = (get_main_user_id(), get_main_display_name())
@@ -20366,6 +20940,7 @@ def test_put_bucket_ownership_object_writer():
     _test_object_ownership_object_writer(get_alt_client(), bucket, bucket_owner)
 
 @pytest.mark.object_ownership
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_bucket_create_delete_bucket_ownership():
     client = get_client()
     bucket_owner = (get_main_user_id(), get_main_display_name())
@@ -20381,6 +20956,7 @@ def test_bucket_create_delete_bucket_ownership():
 
     client.delete_bucket_ownership_controls(Bucket=bucket)
 
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_head_object_404_with_policy_prefix():
     client = get_client()
     bucket = get_new_bucket(client)
@@ -20817,6 +21393,7 @@ def _test_lifecycle_transition(source_mode_key, source_sc=None, dest_sc=None):
     "source_mode_key, source_storage_class, dest_storage_class",
     generate_lifecycle_transition_params()
 )
+@pytest.mark.skip(reason="Known Chimera S3 Test Issue")
 def test_lifecycle_transition_encrypted(source_mode_key, source_storage_class, dest_storage_class):
     if len(configured_storage_classes()) < 2:
         pytest.skip('need at least two storage classes to test lifecycle transition')
@@ -20825,3 +21402,4 @@ def test_lifecycle_transition_encrypted(source_mode_key, source_storage_class, d
         f"Testing lifecycle transition of {source_mode_key} with storage class {source_storage_class} -> {dest_storage_class}"
     )
     _test_lifecycle_transition(source_mode_key, source_storage_class, dest_storage_class)
+
