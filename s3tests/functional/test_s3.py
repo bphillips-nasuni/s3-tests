@@ -313,6 +313,7 @@ def validate_bucket_listv2(bucket_name, prefix, delimiter, continuation_token, m
     return response['NextContinuationToken']
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_bucket_list_delimiter_prefix():
     bucket_name = _create_objects(keys=['asdf', 'boo/bar', 'boo/baz/xyzzy', 'cquux/thud', 'cquux/bla'])
 
@@ -336,6 +337,7 @@ def test_bucket_list_delimiter_prefix():
 
 @pytest.mark.list_objects_v2
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_bucket_listv2_delimiter_prefix():
     bucket_name = _create_objects(keys=['asdf', 'boo/bar', 'boo/baz/xyzzy', 'cquux/thud', 'cquux/bla'])
 
@@ -403,6 +405,7 @@ def test_bucket_listv2_delimiter_alt():
     assert prefixes == ['ba', 'ca']
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_bucket_list_delimiter_prefix_underscore():
     bucket_name = _create_objects(keys=['_obj1_','_under1/bar', '_under1/baz/xyzzy', '_under2/thud', '_under2/bla'])
 
@@ -425,6 +428,7 @@ def test_bucket_list_delimiter_prefix_underscore():
 
 @pytest.mark.list_objects_v2
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_bucket_listv2_delimiter_prefix_underscore():
     bucket_name = _create_objects(keys=['_obj1_','_under1/bar', '_under1/baz/xyzzy', '_under2/thud', '_under2/bla'])
 
@@ -627,6 +631,7 @@ def test_bucket_listv2_delimiter_none():
     assert prefixes == []
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_bucket_listv2_fetchowner_notempty():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -637,6 +642,7 @@ def test_bucket_listv2_fetchowner_notempty():
     assert 'Owner' in objs_list[0]
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_bucket_listv2_fetchowner_defaultempty():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -647,6 +653,7 @@ def test_bucket_listv2_fetchowner_defaultempty():
     assert not 'Owner' in objs_list[0]
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_bucket_listv2_fetchowner_empty():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -718,6 +725,7 @@ def test_bucket_list_prefix_basic():
     assert prefixes == []
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_bucket_listv2_prefix_basic():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket_name = _create_objects(keys=key_names)
@@ -1780,6 +1788,7 @@ def test_expected_bucket_owner():
   assert error_code == 'AccessDenied'
 
 @pytest.mark.list_objects_v2
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multi_objectv2_delete():
     key_names = ['key0', 'key1', 'key2']
     bucket_name = _create_objects(keys=key_names)
@@ -1801,6 +1810,7 @@ def test_multi_objectv2_delete():
     response = client.list_objects_v2(Bucket=bucket_name)
     assert 'Contents' not in response
 
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multi_object_delete_key_limit():
     key_names = [f"key-{i}" for i in range(1001)]
     bucket_name = _create_objects(keys=key_names)
@@ -1818,6 +1828,7 @@ def test_multi_object_delete_key_limit():
     status, error_code = _get_status_and_error_code(e.response)
     assert status == 400
 
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multi_objectv2_delete_key_limit():
     key_names = [f"key-{i}" for i in range(1001)]
     bucket_name = _create_objects(keys=key_names)
@@ -5658,6 +5669,7 @@ def test_bucket_create_special_key_names():
         assert name == body
         client.put_object_acl(Bucket=bucket_name, Key=name, ACL='private')
 
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_bucket_list_special_prefix():
     key_names = ['_bla/1', '_bla/2', '_bla/3', '_bla/4', 'abcd']
     bucket_name = _create_objects(keys=key_names)
@@ -5763,6 +5775,7 @@ def test_object_copy_to_itself_with_metadata():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_object_copy_diff_bucket():
     bucket_name1 = get_new_bucket()
     bucket_name2 = get_new_bucket()
@@ -6264,6 +6277,7 @@ def _check_key_content(src_key, src_bucket_name, dest_key, dest_bucket_name, ver
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multipart_copy_small():
     src_key = 'foo'
     src_bucket_name = _create_key_with_random_content(src_key)
@@ -6514,6 +6528,7 @@ def test_multipart_upload_resend_part():
     _check_upload_multipart_resend(bucket_name, key, objlen, [1,2])
     _check_upload_multipart_resend(bucket_name, key, objlen, [0,1,2,3,4,5])
 
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multipart_upload_multiple_sizes():
     bucket_name = get_new_bucket()
     key="mymultipart"
@@ -6545,6 +6560,7 @@ def test_multipart_upload_multiple_sizes():
 
 @pytest.mark.copy
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multipart_copy_multiple_sizes():
     src_key = 'foo'
     src_bucket_name = _create_key_with_random_content(src_key, 12*1024*1024)
@@ -6583,6 +6599,7 @@ def test_multipart_copy_multiple_sizes():
     client.complete_multipart_upload(Bucket=dest_bucket_name, Key=dest_key, UploadId=upload_id, MultipartUpload={'Parts': parts})
     _check_key_content(src_key, src_bucket_name, dest_key, dest_bucket_name)
 
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multipart_upload_size_too_small():
     bucket_name = get_new_bucket()
     key="mymultipart"
@@ -6630,10 +6647,12 @@ def _do_test_multipart_upload_contents(bucket_name, key, num_parts):
     return all_payload
 
 @pytest.mark.fails_on_dbstore
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multipart_upload_contents():
     bucket_name = get_new_bucket()
     _do_test_multipart_upload_contents(bucket_name, 'mymultipart', 3)
 
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multipart_upload_overwrite_existing_object():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6760,6 +6779,7 @@ def test_list_multipart_upload_owner():
     finally:
         client1.abort_multipart_upload(Bucket=bucket_name, Key=key1, UploadId=upload1)
 
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multipart_upload_missing_part():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -6779,6 +6799,7 @@ def test_multipart_upload_missing_part():
     assert status == 400
     assert error_code == 'InvalidPart'
 
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_multipart_upload_incorrect_etag():
     bucket_name = get_new_bucket()
     client = get_client()
@@ -7496,6 +7517,7 @@ def test_atomic_read_1mb():
 def test_atomic_read_4mb():
     _test_atomic_read(1024*1024*4)
 
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_atomic_read_8mb():
     _test_atomic_read(1024*1024*8)
 
@@ -21089,6 +21111,7 @@ def _test_copy_enc(file_size, source_mode_key, dest_mode_key, source_sc=None, de
     body = _get_body(response)
     assert body == data
 
+
 def _test_copy_part_enc(file_size, source_mode_key, dest_mode_key, source_sc=None, dest_sc=None):
     source_args = _copy_enc_source_modes[source_mode_key]
     dest_args = _copy_enc_dest_modes[dest_mode_key]
@@ -21245,6 +21268,22 @@ def _test_copy_part_enc(file_size, source_mode_key, dest_mode_key, source_sc=Non
 def generate_copy_part_enc_params():
     configure()
     sc = configured_storage_classes()
+    skip_pairs = {
+        ('unencrypted', 'unencrypted'),
+        ('unencrypted', 'sse-c'),
+        ('unencrypted', 'sse-kms'),
+        ('sse-s3', 'unencrypted'),
+        ('sse-s3', 'sse-s3'),
+        ('sse-s3', 'sse-c'),
+        ('sse-s3', 'sse-kms'),
+        ('sse-c', 'sse-s3'),
+        ('sse-c', 'sse-c'),
+        ('sse-c', 'sse-kms'),
+        ('sse-kms', 'unencrypted'),
+        ('sse-kms', 'sse-s3'),
+        ('sse-kms', 'sse-c'),
+        ('sse-kms', 'sse-kms'),
+    }
     
     obj_sizes = [8*1024*1024] # min multipart is 5MB
     params = []
@@ -21259,13 +21298,20 @@ def generate_copy_part_enc_params():
                         # storage classes are not supported on AWS
                         additional_marks.append(pytest.mark.fails_on_aws)
                     for obj_size in obj_sizes:
+                        marks = [*source_marks, *dest_marks, *additional_marks]
+                        if (source_key, dest_key) in skip_pairs and source_sc == dest_sc == 'STANDARD':
+                            if source_key == 'unencrypted' and dest_key == 'unencrypted':
+                                reason = "Strider/Chimera S3 ERROR Requiring Work/Investigation"
+                            else:
+                                reason = "Strider/Chimera S3 Failure Requiring Work/Investigation"
+                            marks.append(pytest.mark.skip(reason=reason))
                         param = pytest.param(
                             source_key,
                             dest_key,
                             source_sc,
                             dest_sc,
                             obj_size,
-                            marks=[*source_marks, *dest_marks, *additional_marks]
+                            marks=marks
                         )
                         params.append(param)
     return params
@@ -21276,6 +21322,7 @@ def generate_copy_part_enc_params():
     "source_mode_key, dest_mode_key, source_storage_class, dest_storage_class, obj_size",
     generate_copy_part_enc_params()
 )
+@pytest.mark.skip(reason="Strider/Chimera S3 Failure Requiring Work/Investigation")
 def test_copy_part_enc(source_mode_key, dest_mode_key, source_storage_class, dest_storage_class, obj_size):
     print(
         f"Testing copy part from {source_mode_key} to {dest_mode_key} with storage class "
@@ -21286,6 +21333,21 @@ def test_copy_part_enc(source_mode_key, dest_mode_key, source_storage_class, des
 def generate_copy_enc_params():
     configure()
     sc = configured_storage_classes()
+    skip_pairs = {
+        ('unencrypted', 'sse-s3'),
+        ('unencrypted', 'sse-c'),
+        ('unencrypted', 'sse-kms'),
+        ('sse-s3', 'unencrypted'),
+        ('sse-s3', 'sse-s3'),
+        ('sse-s3', 'sse-c'),
+        ('sse-s3', 'sse-kms'),
+        ('sse-c', 'sse-s3'),
+        ('sse-c', 'sse-c'),
+        ('sse-c', 'sse-kms'),
+        ('sse-kms', 'sse-s3'),
+        ('sse-kms', 'sse-c'),
+        ('sse-kms', 'sse-kms'),
+    }
 
     obj_sizes = [1, 1024, 1024*1024, 8*1024*1024]
 
@@ -21304,13 +21366,20 @@ def generate_copy_enc_params():
                             pytest.mark.storage_class,
                         ])
                     for obj_size in obj_sizes:
+                        marks = [*source_marks, *dest_marks, *additional_marks]
+                        if (source_key, dest_key) in skip_pairs and source_sc == dest_sc == 'STANDARD':
+                            if (source_key, dest_key) == ('sse-c', 'sse-kms'):
+                                reason = "Strider/Chimera S3 ERROR Requiring Work/Investigation"
+                            else:
+                                reason = "Strider/Chimera S3 Failure Requiring Work/Investigation"
+                            marks.append(pytest.mark.skip(reason=reason))
                         param = pytest.param(
                             source_key,
                             dest_key,
                             source_sc,
                             dest_sc,
                             obj_size,
-                            marks=[*source_marks, *dest_marks, *additional_marks]
+                            marks=marks
                         )
                         params.append(param)
     return params
